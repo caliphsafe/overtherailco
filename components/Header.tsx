@@ -34,8 +34,8 @@ export default function Header() {
   />
 </span>
           <span className="brand-words">
-            <strong>OVER THE RAIL</strong>
-            <small>CO. · NEW BEDFORD</small>
+            <strong>OVER THE RAIL CO.</strong>
+            <small>NEW BEDFORD · MA</small>
           </span>
         </Link>
 
