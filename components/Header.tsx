@@ -27,12 +27,12 @@ export default function Header() {
 
       <header className="site-header">
         <Link className="brand-lockup" href="/" aria-label="Over The Rail Co. home">
-          <span className="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 56 56" role="img">
-              <circle cx="28" cy="28" r="25" />
-              <path d="M11 30h34M17 22c5-7 17-7 22 0M18 36c7 5 13 5 20 0M28 13v30" />
-            </svg>
-          </span>
+         <span className="brand-mark" aria-hidden="true">
+  <img
+    src="/icon.png"
+    alt=""
+  />
+</span>
           <span className="brand-words">
             <strong>OVER THE RAIL</strong>
             <small>CO. · NEW BEDFORD</small>
