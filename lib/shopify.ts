@@ -271,9 +271,11 @@ export async function getShopData(): Promise<{ products: Product[]; collections:
   try {
     const data = await shopifyFetch<any>({ query });
     return {
-      products: data.products.nodes.map(normalizeProduct),
-      collections: data.collections.nodes.map(normalizeCollection),
-    };
+  products: data.products.nodes.map(normalizeProduct),
+  collections: data.collections.nodes
+    .filter((collection: any) => collection.handle !== "home-page")
+    .map(normalizeCollection),
+};
   } catch (error) {
     console.error(error);
     return { products: [], collections: [] };
