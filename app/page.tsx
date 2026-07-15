@@ -1,26 +1,11 @@
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
-import {
-  formatMoney,
-  getFeaturedProducts,
-} from "@/lib/shopify";
+import { getFeaturedProducts } from "@/lib/shopify";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const featuredProducts = await getFeaturedProducts(4);
-
-  const heroProduct = featuredProducts[0];
-
-  const heroProductHref = heroProduct
-    ? `/products/${heroProduct.handle}`
-    : "/shop";
-
-  const heroDescription = heroProduct?.description?.trim()
-    ? heroProduct.description.length > 175
-      ? `${heroProduct.description.slice(0, 175).trim()}…`
-      : heroProduct.description
-    : "Gear built to represent the people, work, sacrifice, and culture of the commercial fishing industry.";
 
   return (
     <>
@@ -62,91 +47,25 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <article
-            className="hero-featured-product"
-            aria-label={
-              heroProduct
-                ? `Featured product: ${heroProduct.title}`
-                : "Featured product"
-            }
+          <div
+            className="hero-logo-stage"
+            aria-label="Over The Rail Co."
           >
-            <Link
-              className="hero-featured-media"
-              href={heroProductHref}
-              aria-label={
-                heroProduct
-                  ? `Shop ${heroProduct.title}`
-                  : "Shop Over The Rail Co."
-              }
-            >
-              {heroProduct?.featuredImage ? (
-                <img
-                  src={heroProduct.featuredImage.url}
-                  alt={
-                    heroProduct.featuredImage.altText ||
-                    heroProduct.title
-                  }
-                />
-              ) : (
-                <div className="hero-placeholder">
-                  <span>OTR</span>
-                  <small>FEATURED GEAR</small>
-                </div>
-              )}
-
-              <div className="hero-featured-badge">
-                <span>Featured item</span>
-                <span>01</span>
-              </div>
-            </Link>
-
-            <div className="hero-featured-content">
-              <div className="hero-featured-kicker">
-                <span>Home page collection</span>
-                <span>New Bedford · MA</span>
-              </div>
-
-              <Link
-                className="hero-featured-title-link"
-                href={heroProductHref}
-              >
-                <h2>
-                  {heroProduct?.title ||
-                    "Working Waterfront Gear"}
-                </h2>
-              </Link>
-
-              {heroProduct && (
-                <p className="hero-featured-price">
-                  {formatMoney(
-                    heroProduct.priceRange.minVariantPrice
-                  )}
-                </p>
-              )}
-
-              <p className="hero-featured-description">
-                {heroDescription}
-              </p>
-
-              <div className="hero-featured-actions">
-                <Link
-                  className="button hero-featured-shop-button"
-                  href={heroProductHref}
-                >
-                  {heroProduct
-                    ? "Shop this item"
-                    : "Shop all gear"}
-                </Link>
-
-                <Link
-                  className="hero-featured-secondary-link"
-                  href="/shop"
-                >
-                  View all gear <span>→</span>
-                </Link>
-              </div>
+            <div className="hero-logo-coordinate">
+              41.6362° N / 70.9342° W
             </div>
-          </article>
+
+            <img
+              className="hero-main-logo"
+              src="/icon.png"
+              alt="Over The Rail Co."
+            />
+
+            <div className="hero-logo-caption">
+              <span>Over The Rail Co.</span>
+              <span>New Bedford · Massachusetts</span>
+            </div>
+          </div>
         </div>
 
         <div
@@ -317,7 +236,9 @@ export default async function HomePage() {
           <div className="values-stack">
             <div>
               <span>01</span>
+
               <strong>Faith</strong>
+
               <p>
                 The grounding force behind the work and
                 the journey.
@@ -326,7 +247,9 @@ export default async function HomePage() {
 
             <div>
               <span>02</span>
+
               <strong>Family</strong>
+
               <p>
                 The reason the sacrifice matters in the
                 first place.
@@ -335,7 +258,9 @@ export default async function HomePage() {
 
             <div>
               <span>03</span>
+
               <strong>Hard Work</strong>
+
               <p>
                 Earned offshore, on the docks, and in
                 every honest trade.
@@ -344,7 +269,9 @@ export default async function HomePage() {
 
             <div>
               <span>04</span>
+
               <strong>Respect</strong>
+
               <p>
                 For everyone who earns a living with
                 their hands.
