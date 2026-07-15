@@ -58,7 +58,7 @@ export default function ContactPage() {
             </div>
           </div>
           <div className="social-link-grid">
-            <a href="https://www.facebook.com/overtherailco" target="_blank" rel="noreferrer"><span>Facebook</span><strong>Over The Rail Co.</strong><i>↗</i></a>
+            <a href="https://www.facebook.com/share/1Dxz9xsAcq/?mibextid=wwXIfr" target="_blank" rel="noreferrer"><span>Facebook</span><strong>Over The Rail Co.</strong><i>↗</i></a>
             <a href="https://www.instagram.com/overtherailco/" target="_blank" rel="noreferrer"><span>Instagram</span><strong>@overtherailco</strong><i>↗</i></a>
             <a href="https://www.tiktok.com/@overtherailco" target="_blank" rel="noreferrer"><span>TikTok</span><strong>@overtherailco</strong><i>↗</i></a>
           </div>
