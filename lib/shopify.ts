@@ -234,7 +234,7 @@ export async function getFeaturedProducts(limit = 4): Promise<Product[]> {
   try {
     const data = await shopifyFetch<any>({
       query,
-      variables: { handle: "featured-products", first: limit },
+      variables: { handle: "home-page", first: limit },
     });
     const source = data.collection?.products?.nodes?.length
       ? data.collection.products.nodes
