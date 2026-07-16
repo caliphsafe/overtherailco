@@ -241,25 +241,36 @@ export function getCollectionPriority(
 
 export function sortCollectionsForStorefront<
   T extends CollectionLike,
->(collections: T[]): T[] {
-  return collections
-    .map((collection, originalIndex) => ({
-      collection,
-      originalIndex,
-      priority:
-        getCollectionPriority(collection),
-    }))
-    .sort((a, b) => {
-      if (a.priority !== b.priority) {
-        return a.priority - b.priority;
+>(
+  collections: readonly T[]
+): T[] {
+  return [...collections].sort(
+    (a, b) => {
+      const priorityA =
+        getCollectionPriority(a);
+
+      const priorityB =
+        getCollectionPriority(b);
+
+      if (priorityA !== priorityB) {
+        return priorityA - priorityB;
       }
 
-      return (
-        a.originalIndex -
-        b.originalIndex
+      /*
+        Collections with the same priority
+        retain a predictable title-based order.
+      */
+      const titleA =
+        a.title?.trim() || "";
+
+      const titleB =
+        b.title?.trim() || "";
+
+      return titleA.localeCompare(
+        titleB
       );
-    })
-    .map(({ collection }) => collection);
+    }
+  );
 }
 
 export function getCollectionFallbackDescription(
