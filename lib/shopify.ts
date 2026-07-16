@@ -645,10 +645,10 @@ export async function getShopData(
             collection.products.length > 0
         );
 
-    const collections =
-      sortCollectionsForStorefront(
-        customerCollections
-      );
+    const collections: Collection[] =
+  sortCollectionsForStorefront<Collection>(
+    customerCollections
+  );
 
     return {
       products,
