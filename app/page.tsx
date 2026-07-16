@@ -35,6 +35,27 @@ export default async function HomePage() {
   return (
     <>
       <section className="home-hero">
+        <video
+          className="home-hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
+        >
+          <source
+            src="/hero.mp4"
+            type="video/mp4"
+          />
+        </video>
+
+        <div
+          className="home-hero-overlay"
+          aria-hidden="true"
+        />
+
         <div className="hero-grid content-shell">
           <div className="hero-copy">
             <p className="eyebrow hero-eyebrow">
