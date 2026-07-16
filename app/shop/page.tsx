@@ -6,6 +6,7 @@ import ProductSection from "@/components/ProductSection";
 import CategoryShowcase from "@/components/CategoryShowcase";
 import CategoryProductSection from "@/components/CategoryProductSection";
 import ShopCatalog from "@/components/ShopCatalog";
+import ShopCategoryNav from "@/components/ShopCategoryNav";
 import {
   getShopData,
 } from "@/lib/shopify";
@@ -22,13 +23,36 @@ export const metadata: Metadata = {
 export const dynamic =
   "force-dynamic";
 
-export default async function ShopPage() {
+type ShopPageProps = {
+  searchParams: Promise<{
+    collection?: string;
+  }>;
+};
+
+export default async function ShopPage({
+  searchParams,
+}: ShopPageProps) {
   const {
     products,
     collections,
     bestSellers,
     newArrivals,
   } = await getShopData();
+
+  const {
+    collection:
+      requestedCollection,
+  } = await searchParams;
+
+  const activeCollection =
+    collections.some(
+      (collection) =>
+        collection.handle ===
+        requestedCollection
+    )
+      ? requestedCollection ||
+        "all"
+      : "all";
 
   const showcaseCollections =
     collections.slice(
@@ -90,13 +114,20 @@ export default async function ShopPage() {
         </div>
       </section>
 
+      <ShopCategoryNav
+        collections={collections}
+        activeCollection={
+          activeCollection
+        }
+      />
+
       <ProductSection
         id="best-sellers"
         eyebrow="01 / Best Sellers"
         title="The gear customers reach for first."
         description="Four of the most popular products across the Over The Rail store."
         products={bestSellers}
-        viewAllHref="#catalog"
+        viewAllHref="/shop#catalog"
         viewAllLabel="Shop all gear"
         badge="Best Seller"
         className="best-sellers-section"
@@ -108,7 +139,7 @@ export default async function ShopPage() {
         title="The latest gear to hit the waterfront."
         description="Recently added products, displayed newest first."
         products={newArrivals}
-        viewAllHref="#catalog"
+        viewAllHref="/shop#catalog"
         viewAllLabel="Browse the catalog"
         badge="New"
         className="new-arrivals-section"
@@ -135,8 +166,12 @@ export default async function ShopPage() {
       </div>
 
       <ShopCatalog
+        key={activeCollection}
         products={products}
         collections={collections}
+        activeCollection={
+          activeCollection
+        }
       />
     </>
   );
