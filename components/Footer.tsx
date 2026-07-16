@@ -18,7 +18,7 @@ export default function Footer() {
         <div>
           <p className="footer-label">Social</p>
           <a href="https://www.instagram.com/overtherailco/" target="_blank" rel="noreferrer">Instagram</a>
-          <a href="https://www.facebook.com/overtherailco" target="_blank" rel="noreferrer">Facebook</a>
+          <a href="https://www.facebook.com/share/1Dxz9xsAcq/?mibextid=wwXIfr" target="_blank" rel="noreferrer">Facebook</a>
           <a href="https://www.tiktok.com/@overtherailco" target="_blank" rel="noreferrer">TikTok</a>
         </div>
         <div>
