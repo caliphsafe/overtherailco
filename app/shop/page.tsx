@@ -63,6 +63,27 @@ export default async function ShopPage({
   return (
     <>
       <section className="shop-hero">
+        <video
+          className="page-hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
+        >
+          <source
+            src="/shop.mp4"
+            type="video/mp4"
+          />
+        </video>
+
+        <div
+          className="page-hero-overlay"
+          aria-hidden="true"
+        />
+
         <div className="content-shell shop-hero-grid">
           <div>
             <p className="eyebrow">
