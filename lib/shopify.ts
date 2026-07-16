@@ -1,3 +1,11 @@
+import {
+  isBestSellerCollection,
+  isHomePageCollection,
+  isNewArrivalCollection,
+  isUtilityCollection,
+  sortCollectionsForStorefront,
+} from "@/lib/storefront-config";
+
 export type Money = {
   amount: string;
   currencyCode: string;
@@ -35,6 +43,7 @@ export type Product = {
   handle: string;
   description: string;
   descriptionHtml: string;
+  createdAt: string;
   availableForSale: boolean;
   vendor: string;
   productType: string;
@@ -63,6 +72,13 @@ export type Collection = {
   description: string;
   image: ShopifyImage | null;
   products: Product[];
+};
+
+export type ShopPageData = {
+  products: Product[];
+  collections: Collection[];
+  bestSellers: Product[];
+  newArrivals: Product[];
 };
 
 export type CartLine = {
@@ -150,7 +166,8 @@ export async function shopifyFetch<T>({
 
     headers: {
       "Content-Type": "application/json",
-      "X-Shopify-Storefront-Access-Token": token,
+      "X-Shopify-Storefront-Access-Token":
+        token,
     },
 
     body: JSON.stringify({
@@ -192,6 +209,7 @@ const PRODUCT_CARD_FRAGMENT = `
     title
     handle
     description
+    createdAt
     availableForSale
     vendor
     productType
@@ -255,6 +273,7 @@ const PRODUCT_FULL_FRAGMENT = `
     handle
     description
     descriptionHtml
+    createdAt
     availableForSale
     vendor
     productType
@@ -331,9 +350,20 @@ const PRODUCT_FULL_FRAGMENT = `
    NORMALIZERS
 ========================================= */
 
-function normalizeProduct(node: any): Product {
+function normalizeProduct(
+  node: any
+): Product {
   return {
     ...node,
+
+    description:
+      node.description || "",
+
+    descriptionHtml:
+      node.descriptionHtml || "",
+
+    createdAt:
+      node.createdAt || "",
 
     images:
       node.images?.nodes ||
@@ -355,75 +385,28 @@ function normalizeCollection(
   return {
     ...node,
 
+    description:
+      node.description || "",
+
+    image:
+      node.image || null,
+
     products: (
       node.products?.nodes || []
     ).map(normalizeProduct),
   };
 }
 
-
-/* =========================================
-   HOME PAGE COLLECTION IDENTIFICATION
-========================================= */
-
-/*
-  This makes the website identify the Shopify
-  "Home page" collection by either its visible
-  title or its internal Shopify handle.
-
-  This avoids problems if Shopify uses:
-  - home-page
-  - frontpage
-  - another handle
-
-  As long as the visible collection title is
-  "Home page", the website will find it.
-*/
-
-function isHomePageCollection(
-  collection: {
-    title?: string;
-    handle?: string;
-  }
-): boolean {
-  const title = (
-    collection.title || ""
-  )
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, " ");
-
-  const handle = (
-    collection.handle || ""
-  )
-    .trim()
-    .toLowerCase();
-
-  return (
-    title === "home page" ||
-    handle === "home-page" ||
-    handle === "frontpage"
-  );
+function normalizeProductList(
+  nodes: any[] = []
+): Product[] {
+  return nodes.map(normalizeProduct);
 }
 
 
 /* =========================================
    HOME PAGE FEATURED PRODUCTS
 ========================================= */
-
-/*
-  Pulls products specifically from the Shopify
-  collection called "Home page".
-
-  These products are used by app/page.tsx for:
-  - Hero product 1
-  - Hero product 2
-  - Featured product grid
-
-  If the Home page collection cannot be found
-  or has no products, the function falls back
-  to the newest Shopify products.
-*/
 
 export async function getFeaturedProducts(
   limit = 4
@@ -496,23 +479,14 @@ export async function getFeaturedProducts(
         ?.products
         ?.nodes || [];
 
-    /*
-      Prefer products from the Home page
-      collection.
-
-      Fall back to newest products only if
-      that collection cannot be found or
-      contains no products.
-    */
-
     const source =
       homePageProducts.length > 0
         ? homePageProducts
         : data.products?.nodes || [];
 
-    return source.map(
-      normalizeProduct
-    );
+    return normalizeProductList(
+      source
+    ).slice(0, limit);
   } catch (error) {
     console.error(
       "Unable to load homepage products:",
@@ -528,34 +502,39 @@ export async function getFeaturedProducts(
    SHOP PAGE DATA
 ========================================= */
 
-/*
-  Loads:
-  - All Shopify products
-  - All Shopify collections
-
-  But specifically removes the collection
-  called "Home page" from the category list
-  before sending collections to the Shop page.
-*/
-
-export async function getShopData(): Promise<{
-  products: Product[];
-  collections: Collection[];
-}> {
+export async function getShopData(
+  sectionLimit = 4
+): Promise<ShopPageData> {
   if (!isShopifyConfigured) {
     return {
       products: [],
       collections: [],
+      bestSellers: [],
+      newArrivals: [],
     };
   }
 
   const query = `
     ${PRODUCT_CARD_FRAGMENT}
 
-    query ShopData {
+    query ShopData(
+      $catalogLimit: Int!
+      $sectionLimit: Int!
+      $collectionLimit: Int!
+    ) {
       products(
-        first: 100
-        sortKey: TITLE
+        first: $catalogLimit
+        sortKey: BEST_SELLING
+      ) {
+        nodes {
+          ...ProductCard
+        }
+      }
+
+      newArrivals: products(
+        first: $sectionLimit
+        sortKey: CREATED_AT
+        reverse: true
       ) {
         nodes {
           ...ProductCard
@@ -563,8 +542,7 @@ export async function getShopData(): Promise<{
       }
 
       collections(
-        first: 100
-        sortKey: TITLE
+        first: $collectionLimit
       ) {
         nodes {
           id
@@ -593,37 +571,90 @@ export async function getShopData(): Promise<{
     const data =
       await shopifyFetch<any>({
         query,
+
+        variables: {
+          catalogLimit: 100,
+          sectionLimit,
+          collectionLimit: 100,
+        },
       });
 
-    const allProducts =
+    const rawProducts =
       data.products?.nodes || [];
 
-    const allCollections =
+    const rawCollections =
       data.collections?.nodes || [];
 
-    /*
-      Remove the "Home page" collection
-      completely from the Shop category list.
-    */
+    const products =
+      normalizeProductList(
+        rawProducts
+      );
 
-    const shopCollections =
-      allCollections
+    const manualBestSellerCollection =
+      rawCollections.find(
+        (collection: any) =>
+          isBestSellerCollection(
+            collection
+          )
+      );
+
+    const manualNewArrivalCollection =
+      rawCollections.find(
+        (collection: any) =>
+          isNewArrivalCollection(
+            collection
+          )
+      );
+
+    const manualBestSellerProducts =
+      manualBestSellerCollection
+        ?.products
+        ?.nodes || [];
+
+    const manualNewArrivalProducts =
+      manualNewArrivalCollection
+        ?.products
+        ?.nodes || [];
+
+    const bestSellers =
+      normalizeProductList(
+        manualBestSellerProducts.length
+          ? manualBestSellerProducts
+          : rawProducts
+      ).slice(0, sectionLimit);
+
+    const newArrivals =
+      normalizeProductList(
+        manualNewArrivalProducts.length
+          ? manualNewArrivalProducts
+          : data.newArrivals
+              ?.nodes || []
+      ).slice(0, sectionLimit);
+
+    const customerCollections =
+      rawCollections
         .filter(
           (collection: any) =>
-            !isHomePageCollection(
+            !isUtilityCollection(
               collection
             )
         )
-        .map(normalizeCollection);
+        .map(normalizeCollection)
+        .filter(
+          (collection: Collection) =>
+            collection.products.length > 0
+        );
+
+    const collections =
+      sortCollectionsForStorefront(
+        customerCollections
+      );
 
     return {
-      products:
-        allProducts.map(
-          normalizeProduct
-        ),
-
-      collections:
-        shopCollections,
+      products,
+      collections,
+      bestSellers,
+      newArrivals,
     };
   } catch (error) {
     console.error(
@@ -634,6 +665,8 @@ export async function getShopData(): Promise<{
     return {
       products: [],
       collections: [],
+      bestSellers: [],
+      newArrivals: [],
     };
   }
 }
