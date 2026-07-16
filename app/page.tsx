@@ -1,11 +1,36 @@
 import Link from "next/link";
-import ProductCard from "@/components/ProductCard";
-import { getFeaturedProducts } from "@/lib/shopify";
+import ProductSection from "@/components/ProductSection";
+import CategoryShowcase from "@/components/CategoryShowcase";
+import {
+  getFeaturedProducts,
+  getShopData,
+} from "@/lib/shopify";
+import {
+  CATEGORY_SHOWCASE_LIMIT,
+} from "@/lib/storefront-config";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const featuredProducts = await getFeaturedProducts(4);
+  const [
+    featuredProducts,
+    shopData,
+  ] = await Promise.all([
+    getFeaturedProducts(4),
+    getShopData(4),
+  ]);
+
+  const {
+    bestSellers,
+    newArrivals,
+    collections,
+  } = shopData;
+
+  const showcaseCollections =
+    collections.slice(
+      0,
+      CATEGORY_SHOWCASE_LIMIT
+    );
 
   return (
     <>
@@ -86,10 +111,21 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <ProductSection
+        id="featured"
+        eyebrow="01 / Featured by Over The Rail"
+        title="Gear that carries the culture."
+        description="A curated selection from the Over The Rail Co. home collection."
+        products={featuredProducts}
+        viewAllHref="/shop"
+        viewAllLabel="Shop all products"
+        className="home-featured-section"
+      />
+
       <section className="intro-manifesto section-pad">
         <div className="content-shell manifesto-grid">
           <p className="section-number">
-            01 / THE BRAND
+            02 / THE BRAND
           </p>
 
           <div className="manifesto-copy">
@@ -124,78 +160,33 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="featured-section section-pad">
-        <div className="content-shell">
-          <div className="section-heading-row">
-            <div>
-              <p className="eyebrow">
-                02 / Featured products
-              </p>
+      <CategoryShowcase
+        collections={showcaseCollections}
+      />
 
-              <h2>
-                Gear that carries
-                <br />
-                the culture.
-              </h2>
-            </div>
+      <ProductSection
+        id="best-sellers"
+        eyebrow="04 / Best Sellers"
+        title="The gear customers reach for first."
+        description="Four of the most popular products across the Over The Rail store."
+        products={bestSellers}
+        viewAllHref="/shop#catalog"
+        viewAllLabel="Shop all gear"
+        badge="Best Seller"
+        className="home-best-sellers-section"
+      />
 
-            <Link
-              className="text-link"
-              href="/shop"
-            >
-              Shop all products <span>→</span>
-            </Link>
-          </div>
-
-          {featuredProducts.length ? (
-            <div className="product-grid home-product-grid">
-              {featuredProducts.map(
-                (product, index) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    index={index}
-                  />
-                )
-              )}
-            </div>
-          ) : (
-            <div className="featured-placeholder-grid">
-              {[
-                "Deck Gear",
-                "Offshore Essentials",
-                "Working Waterfront",
-                "Everyday Pride",
-              ].map((label, index) => (
-                <article
-                  className="featured-placeholder"
-                  key={label}
-                >
-                  <div className="product-placeholder">
-                    <span>
-                      {index + 1 < 10
-                        ? `0${index + 1}`
-                        : index + 1}
-                    </span>
-
-                    <small>
-                      SHOPIFY PRODUCT
-                    </small>
-                  </div>
-
-                  <div>
-                    <strong>{label}</strong>
-
-                    <span>
-                      Connect Shopify to populate
-                    </span>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+      <ProductSection
+        id="new-arrivals"
+        eyebrow="05 / New Arrivals"
+        title="The latest gear to hit the waterfront."
+        description="Recently added products, displayed newest first."
+        products={newArrivals}
+        viewAllHref="/shop#catalog"
+        viewAllLabel="Browse new gear"
+        badge="New"
+        className="home-new-arrivals-section"
+      />
 
       <section className="way-of-life-section">
         <div
@@ -208,7 +199,7 @@ export default async function HomePage() {
         <div className="content-shell way-of-life-grid">
           <div className="way-of-life-copy">
             <p className="eyebrow">
-              03 / More than apparel
+              06 / More than apparel
             </p>
 
             <h2>
