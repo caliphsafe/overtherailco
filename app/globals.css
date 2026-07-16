@@ -1145,6 +1145,7 @@ main {
 .shop-hero,
 .collection-page-hero {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
 
   background: var(--black);
@@ -1159,10 +1160,60 @@ main {
   display: none;
 }
 
+.page-hero-video {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+
+  object-fit: cover;
+  object-position: center center;
+
+  pointer-events: none;
+}
+
+.page-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.68) 46%,
+      rgba(0, 0, 0, 0.42) 72%,
+      rgba(0, 0, 0, 0.6) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.14) 0%,
+      rgba(0, 0, 0, 0.08) 52%,
+      rgba(0, 0, 0, 0.72) 100%
+    );
+
+  pointer-events: none;
+}
+
+.shop-hero .page-hero-video {
+  object-position: center 48%;
+}
+
+.about-hero .page-hero-video {
+  object-position: center 42%;
+}
+
+.contact-hero .page-hero-video {
+  object-position: center center;
+}
+
 .inner-hero-grid {
   min-height: 540px;
 
   position: relative;
+  z-index: 1;
 
   display: grid;
   grid-template-columns:
@@ -1449,6 +1500,7 @@ main {
   min-height: 460px;
 
   position: relative;
+  z-index: 1;
 
   display: grid;
   grid-template-columns: 1.3fr 0.7fr;
@@ -3446,6 +3498,20 @@ a.contact-card:hover {
     padding-bottom: 55px;
   }
 
+  .page-hero-video {
+    object-position: 58% center;
+  }
+
+  .page-hero-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.88) 0%,
+        rgba(0, 0, 0, 0.64) 48%,
+        rgba(0, 0, 0, 0.84) 100%
+      );
+  }
+
   .inner-hero h1,
   .shop-hero h1 {
     font-size: 63px;
@@ -3842,7 +3908,8 @@ a.contact-card:hover {
 ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .home-hero-video {
+  .home-hero-video,
+  .page-hero-video {
     display: none;
   }
 
