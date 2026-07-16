@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   useMemo,
   useState,
@@ -13,6 +14,7 @@ import type {
 type ShopCatalogProps = {
   products: Product[];
   collections: Collection[];
+  activeCollection?: string;
 };
 
 type SortValue =
@@ -25,12 +27,8 @@ type SortValue =
 export default function ShopCatalog({
   products,
   collections,
+  activeCollection = "all",
 }: ShopCatalogProps) {
-  const [
-    activeCollection,
-    setActiveCollection,
-  ] = useState("all");
-
   const [sort, setSort] =
     useState<SortValue>("featured");
 
@@ -45,18 +43,27 @@ export default function ShopCatalog({
         collection.products.length > 0
     );
 
+  const selectedCollection =
+    usefulCollections.find(
+      (collection) =>
+        collection.handle ===
+        activeCollection
+    );
+
+  const resolvedCollection =
+    selectedCollection
+      ? selectedCollection.handle
+      : "all";
+
   const visibleProducts =
     useMemo(() => {
       const selectedProducts =
-        activeCollection === "all"
+        resolvedCollection === "all"
           ? [...products]
           : [
               ...(
-                collections.find(
-                  (collection) =>
-                    collection.handle ===
-                    activeCollection
-                )?.products || []
+                selectedCollection
+                  ?.products || []
               ),
             ];
 
@@ -140,24 +147,20 @@ export default function ShopCatalog({
 
       return filteredProducts;
     }, [
-      activeCollection,
-      collections,
       products,
+      resolvedCollection,
       searchTerm,
+      selectedCollection,
       sort,
     ]);
 
   const activeTitle =
-    activeCollection === "all"
+    resolvedCollection === "all"
       ? "All Products"
-      : collections.find(
-          (collection) =>
-            collection.handle ===
-            activeCollection
-        )?.title || "Collection";
+      : selectedCollection?.title ||
+        "Collection";
 
-  function resetCatalog() {
-    setActiveCollection("all");
+  function clearSearchAndSort() {
     setSearchTerm("");
     setSort("featured");
   }
@@ -189,42 +192,51 @@ export default function ShopCatalog({
 
         <div
           className="collection-rail"
-          aria-label="Shop collections"
+          aria-label="Filter catalog by collection"
         >
-          <button
+          <Link
             className={
-              activeCollection === "all"
+              resolvedCollection === "all"
                 ? "is-active"
                 : ""
             }
-            onClick={() =>
-              setActiveCollection("all")
+            href="/shop#catalog"
+            aria-current={
+              resolvedCollection === "all"
+                ? "page"
+                : undefined
             }
-            type="button"
           >
             All Products
-          </button>
+          </Link>
 
           {usefulCollections.map(
-            (collection) => (
-              <button
-                className={
-                  activeCollection ===
-                  collection.handle
-                    ? "is-active"
-                    : ""
-                }
-                key={collection.id}
-                onClick={() =>
-                  setActiveCollection(
+            (collection) => {
+              const isActive =
+                resolvedCollection ===
+                collection.handle;
+
+              return (
+                <Link
+                  className={
+                    isActive
+                      ? "is-active"
+                      : ""
+                  }
+                  href={`/shop?collection=${encodeURIComponent(
                     collection.handle
-                  )
-                }
-                type="button"
-              >
-                {collection.title}
-              </button>
-            )
+                  )}#catalog`}
+                  key={collection.id}
+                  aria-current={
+                    isActive
+                      ? "page"
+                      : undefined
+                  }
+                >
+                  {collection.title}
+                </Link>
+              );
+            }
           )}
         </div>
 
@@ -318,17 +330,19 @@ export default function ShopCatalog({
 
             <p>
               Try another search term or
-              clear the selected collection
-              to browse the complete store.
+              clear the filters to browse
+              the complete store.
             </p>
 
-            <button
+            <Link
               className="button button-dark"
-              type="button"
-              onClick={resetCatalog}
+              href="/shop#catalog"
+              onClick={
+                clearSearchAndSort
+              }
             >
               Reset catalog
-            </button>
+            </Link>
           </div>
         )}
       </div>
