@@ -479,14 +479,55 @@ main {
   min-height: calc(100vh - 114px);
 
   position: relative;
+  isolation: isolate;
   overflow: hidden;
 
   background: var(--black);
   color: var(--white);
 }
 
+.home-hero-video {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+
+  object-fit: cover;
+  object-position: center center;
+
+  pointer-events: none;
+}
+
+.home-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(0, 0, 0, 0.72) 42%,
+      rgba(0, 0, 0, 0.5) 68%,
+      rgba(0, 0, 0, 0.64) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.16) 0%,
+      rgba(0, 0, 0, 0.08) 48%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+
+  pointer-events: none;
+}
+
 .hero-grid {
   min-height: calc(100vh - 150px);
+
+  position: relative;
+  z-index: 1;
 
   display: grid;
   grid-template-columns:
@@ -567,7 +608,11 @@ main {
 
   overflow: hidden;
 
-  background: var(--black);
+  background: rgba(0, 0, 0, 0.34);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(3px);
 }
 
 .hero-logo-stage::before {
@@ -592,7 +637,7 @@ main {
 
   object-fit: contain;
 
-  background: var(--black);
+  background: transparent;
 }
 
 .hero-logo-coordinate {
@@ -643,6 +688,7 @@ main {
 
   position: absolute;
   inset: auto 0 0;
+  z-index: 3;
 
   padding: 0 24px;
 
@@ -3233,6 +3279,20 @@ a.contact-card:hover {
     min-height: auto;
   }
 
+  .home-hero-video {
+    object-position: 58% center;
+  }
+
+  .home-hero-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.88) 0%,
+        rgba(0, 0, 0, 0.68) 48%,
+        rgba(0, 0, 0, 0.82) 100%
+      );
+  }
+
   .hero-grid {
     padding-top: 65px;
     padding-bottom: 100px;
@@ -3782,6 +3842,10 @@ a.contact-card:hover {
 ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
+  .home-hero-video {
+    display: none;
+  }
+
   *,
   *::before,
   *::after {
