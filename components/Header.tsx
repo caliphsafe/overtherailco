@@ -17,6 +17,10 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { cart, openCart } = useCart();
 
+  if (pathname.startsWith("/catch")) {
+    return null;
+  }
+
   return (
     <>
       <div className="top-ribbon">
@@ -27,12 +31,10 @@ export default function Header() {
 
       <header className="site-header">
         <Link className="brand-lockup" href="/" aria-label="Over The Rail Co. home">
-         <span className="brand-mark" aria-hidden="true">
-  <img
-    src="/icon.png"
-    alt=""
-  />
-</span>
+          <span className="brand-mark" aria-hidden="true">
+            <img src="/icon.png" alt="" />
+          </span>
+
           <span className="brand-words">
             <strong>OVER THE RAIL CO.</strong>
             <small>NEW BEDFORD · MA</small>
@@ -41,9 +43,17 @@ export default function Header() {
 
         <nav className="desktop-nav" aria-label="Primary navigation">
           {links.map((link) => {
-            const active = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+            const active =
+              link.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(link.href);
+
             return (
-              <Link key={link.href} href={link.href} className={active ? "is-active" : ""}>
+              <Link
+                key={link.href}
+                href={link.href}
+                className={active ? "is-active" : ""}
+              >
                 {link.label}
               </Link>
             );
@@ -51,9 +61,15 @@ export default function Header() {
         </nav>
 
         <div className="header-actions">
-          <button className="cart-trigger" type="button" onClick={openCart} aria-label="Open shopping cart">
+          <button
+            className="cart-trigger"
+            type="button"
+            onClick={openCart}
+            aria-label="Open shopping cart"
+          >
             Cart <span>{cart?.totalQuantity || 0}</span>
           </button>
+
           <button
             className={`menu-trigger ${menuOpen ? "is-open" : ""}`}
             type="button"
@@ -70,11 +86,16 @@ export default function Header() {
       <div className={`mobile-menu ${menuOpen ? "is-open" : ""}`}>
         <nav aria-label="Mobile navigation">
           {links.map((link) => (
-            <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+            >
               {link.label}
             </Link>
           ))}
         </nav>
+
         <p>Commercial fishing culture. Faith. Family. Hard work.</p>
       </div>
     </>

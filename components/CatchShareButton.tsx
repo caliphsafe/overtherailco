@@ -10,14 +10,12 @@ type CatchShareButtonProps = {
 export default function CatchShareButton({
   title,
 }: CatchShareButtonProps) {
-  const [label, setLabel] = useState(
-    "Share this catch"
-  );
+  const [label, setLabel] = useState("Send this story");
 
   async function handleShare() {
     const shareData = {
       title,
-      text: "See the fishing trip behind this catch.",
+      text: "See the vessel and voyage behind these scallops.",
       url: window.location.href,
     };
 
@@ -27,17 +25,14 @@ export default function CatchShareButton({
         return;
       }
 
-      await navigator.clipboard.writeText(
-        window.location.href
-      );
-
+      await navigator.clipboard.writeText(window.location.href);
       setLabel("Link copied");
 
       window.setTimeout(() => {
-        setLabel("Share this catch");
+        setLabel("Send this story");
       }, 1800);
     } catch {
-      setLabel("Share this catch");
+      setLabel("Send this story");
     }
   }
 

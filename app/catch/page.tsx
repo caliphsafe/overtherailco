@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import {
-  DEMO_CATCH_TRIP_ID,
-} from "@/lib/catch-trips";
+import CatchCollabMark from "@/components/CatchCollabMark";
+import { DEMO_CATCH_TRIP_ID } from "@/lib/catch-trips";
 import styles from "./catch.module.css";
 
 export const metadata: Metadata = {
-  title: "Trace Your Catch",
+  title: "From Sea to Table",
   description:
-    "Enter the catch passport code from your seafood package to trace the fishing trip behind it.",
+    "Fleet Fisheries × Over The Rail Co. — trace the vessel and voyage behind your seafood.",
 };
 
 type CatchLandingProps = {
@@ -25,19 +24,15 @@ export default async function CatchLandingPage({
 
   if (trip?.trim()) {
     redirect(
-      `/catch/${encodeURIComponent(
-        trip.trim().toLowerCase()
-      )}`
+      `/catch/${encodeURIComponent(trip.trim().toLowerCase())}`
     );
   }
 
   return (
-    <div className={styles.page}>
-      <section
-        className={`${styles.hero} ${styles.lookupHero}`}
-      >
+    <div className={`${styles.page} ${styles.lookupPage}`}>
+      <section className={styles.lookupHero}>
         <video
-          className={styles.heroVideo}
+          className={styles.fullVideo}
           autoPlay
           muted
           loop
@@ -46,78 +41,36 @@ export default async function CatchLandingPage({
           aria-hidden="true"
           tabIndex={-1}
         >
-          <source
-            src="/hero.mp4"
-            type="video/mp4"
-          />
+          <source src="/hero.mp4" type="video/mp4" />
         </video>
 
-        <div
-          className={styles.heroOverlay}
-          aria-hidden="true"
-        />
+        <div className={styles.lookupWash} aria-hidden="true" />
 
-        <div className={styles.lookupShell}>
-          <div className={styles.lookupTop}>
-            <div
-              className={styles.collaborationLockup}
-              aria-label="Over The Rail Co. in collaboration with Fleet Fisheries"
-            >
-              <div className={styles.logoBoxDark}>
-                <img
-                  src="/icon.png"
-                  alt="Over The Rail Co."
-                />
-              </div>
+        <div className={styles.marineTopbar}>
+          <CatchCollabMark compact />
+          <span>NEW BEDFORD · NORTH ATLANTIC</span>
+        </div>
 
-              <span className={styles.collabX}>
-                ×
-              </span>
+        <div className={styles.lookupContent}>
+          <p className={styles.oceanKicker}>FLEET FISHERIES × OVER THE RAIL CO.</p>
 
-              <div className={styles.logoBoxLight}>
-                <img
-                  src="/fleet.png"
-                  alt="Fleet Fisheries"
-                />
-              </div>
-            </div>
+          <h1>
+            Every catch
+            <br />
+            begins
+            <br />
+            <em>somewhere.</em>
+          </h1>
 
-            <span className={styles.lookupTag}>
-              Catch traceability
-            </span>
-          </div>
+          <p className={styles.lookupLead}>
+            The vessel. The water. The people. The trip behind the scallops
+            in your hands.
+          </p>
 
-          <div className={styles.lookupGrid}>
+          <form className={styles.lookupForm} action="/catch" method="get">
+            <label htmlFor="trip">CATCH CODE</label>
+
             <div>
-              <p className={styles.kicker}>
-                From trip to table
-              </p>
-
-              <h1>
-                Trace
-                <br />
-                your
-                <br />
-                <em>catch.</em>
-              </h1>
-
-              <p className={styles.heroLead}>
-                Scan the QR code on your package
-                or enter its trip code below to
-                meet the vessel, captain, and
-                journey behind your scallops.
-              </p>
-            </div>
-
-            <form
-              className={styles.lookupForm}
-              action="/catch"
-              method="get"
-            >
-              <label htmlFor="trip">
-                Catch passport code
-              </label>
-
               <input
                 id="trip"
                 name="trip"
@@ -125,33 +78,28 @@ export default async function CatchLandingPage({
                 inputMode="text"
                 autoCapitalize="characters"
                 autoComplete="off"
-                placeholder="OTR-FLEET-..."
+                placeholder="VP-0907-NB"
                 required
               />
 
-              <button type="submit">
-                Trace this catch
-              </button>
+              <button type="submit">Find my catch</button>
+            </div>
+          </form>
 
-              <p>
-                Your code is printed beside
-                the QR label on participating
-                seafood packages.
-              </p>
-            </form>
-          </div>
+          <Link
+            className={styles.sampleVoyageLink}
+            href={`/catch/${DEMO_CATCH_TRIP_ID}`}
+          >
+            <span>F/V VIKING POWER</span>
+            Explore the sample voyage
+            <b aria-hidden="true">→</b>
+          </Link>
+        </div>
 
-          <div className={styles.lookupDemo}>
-            <span>
-              Preview the experience
-            </span>
-
-            <Link
-              href={`/catch/${DEMO_CATCH_TRIP_ID}`}
-            >
-              Open demo catch passport →
-            </Link>
-          </div>
+        <div className={styles.lookupWaterline} aria-hidden="true">
+          <i />
+          <span>SEA · SHORE · TABLE</span>
+          <i />
         </div>
       </section>
     </div>
