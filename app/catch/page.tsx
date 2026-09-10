@@ -48,62 +48,64 @@ export default async function CatchLandingPage({
 
         <div className={styles.marineTopbar}>
           <span>NEW BEDFORD · NORTH ATLANTIC</span>
-          <span>SEAFOOD TRACEABILITY</span>
+          <span>SEA · SHORE · TABLE</span>
         </div>
 
-        <div className={styles.lookupContent}>
-          <div className={styles.heroLogoWrap}>
-            <CatchCollabMark />
+        <div className={styles.lookupHeroGrid}>
+          <div className={styles.lookupContent}>
+            <p className={styles.oceanKicker}>YOUR CATCH HAS A JOURNEY</p>
+
+            <h1>
+              Start at
+              <br />
+              the water.
+            </h1>
+
+            <p className={styles.lookupLead}>
+              The vessel, the trip, the working waterfront, and the route
+              behind the scallops in your hands.
+            </p>
+
+            <form className={styles.lookupForm} action="/catch" method="get">
+              <label htmlFor="trip">CATCH CODE</label>
+
+              <div>
+                <input
+                  id="trip"
+                  name="trip"
+                  type="text"
+                  inputMode="text"
+                  autoCapitalize="characters"
+                  autoComplete="off"
+                  placeholder="VP-0907-NB"
+                  required
+                />
+
+                <button type="submit">Find my catch</button>
+              </div>
+            </form>
+
+            <Link
+              className={styles.sampleVoyageLink}
+              href={`/catch/${DEMO_CATCH_TRIP_ID}`}
+            >
+              Explore the F/V Viking Power sample voyage
+              <b aria-hidden="true">→</b>
+            </Link>
           </div>
 
-          <p className={styles.oceanKicker}>FLEET FISHERIES × OVER THE RAIL CO.</p>
+          <div className={styles.heroBrandStage}>
+            <span className={styles.heroBrandCoordinate}>
+              41.6362° N · 70.9342° W
+            </span>
 
-          <h1>
-            Follow the
-            <br />
-            journey
-            <br />
-            <em>to your table.</em>
-          </h1>
+            <CatchCollabMark />
 
-          <p className={styles.lookupLead}>
-            From the harbor, to the scallop grounds, to shore, to the box
-            in your hands — every catch has a story.
-          </p>
-
-          <form className={styles.lookupForm} action="/catch" method="get">
-            <label htmlFor="trip">CATCH CODE</label>
-
-            <div>
-              <input
-                id="trip"
-                name="trip"
-                type="text"
-                inputMode="text"
-                autoCapitalize="characters"
-                autoComplete="off"
-                placeholder="VP-0907-NB"
-                required
-              />
-
-              <button type="submit">Find my catch</button>
+            <div className={styles.heroBrandCaption}>
+              <span>Fleet Fisheries × Over The Rail Co.</span>
+              <span>New Bedford · Massachusetts</span>
             </div>
-          </form>
-
-          <Link
-            className={styles.sampleVoyageLink}
-            href={`/catch/${DEMO_CATCH_TRIP_ID}`}
-          >
-            <span>F/V VIKING POWER</span>
-            Explore the sample voyage
-            <b aria-hidden="true">→</b>
-          </Link>
-        </div>
-
-        <div className={styles.lookupWaterline} aria-hidden="true">
-          <i />
-          <span>SEA · VOYAGE · SCALLOPS · SHORE</span>
-          <i />
+          </div>
         </div>
       </section>
     </div>

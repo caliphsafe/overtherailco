@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "@/app/catch/catch.module.css";
 
 type VoyageChapter = {
-  step: string;
+  label: string;
   time: string;
   title: string;
   body: string;
@@ -20,7 +20,7 @@ export default function CatchVoyageExperience({
   chapters,
 }: CatchVoyageExperienceProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const stepRefs = useRef<Array<HTMLElement | null>>([]);
+  const chapterRefs = useRef<Array<HTMLElement | null>>([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -29,27 +29,25 @@ export default function CatchVoyageExperience({
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
-        const leading = visible[0];
-
-        if (!leading) {
+        if (!visible[0]) {
           return;
         }
 
-        const index = Number(
-          (leading.target as HTMLElement).dataset.index
+        const nextIndex = Number(
+          (visible[0].target as HTMLElement).dataset.index
         );
 
-        if (!Number.isNaN(index)) {
-          setActiveIndex(index);
+        if (!Number.isNaN(nextIndex)) {
+          setActiveIndex(nextIndex);
         }
       },
       {
-        rootMargin: "-24% 0px -46% 0px",
-        threshold: [0.05, 0.2, 0.5, 0.8],
+        rootMargin: "-30% 0px -38% 0px",
+        threshold: [0.05, 0.25, 0.5, 0.75],
       }
     );
 
-    stepRefs.current.forEach((node) => {
+    chapterRefs.current.forEach((node) => {
       if (node) {
         observer.observe(node);
       }
@@ -65,8 +63,8 @@ export default function CatchVoyageExperience({
   }
 
   return (
-    <div className={styles.voyageExperience}>
-      <div className={styles.voyageSticky}>
+    <section className={styles.voyageExperience} aria-label="Fishing voyage">
+      <div className={styles.voyageCanvas}>
         <video
           key={activeChapter.video}
           className={styles.voyageVideo}
@@ -82,63 +80,58 @@ export default function CatchVoyageExperience({
 
         <div className={styles.voyageShade} aria-hidden="true" />
 
-        <div className={styles.voyageHud}>
-          <div className={styles.voyageHudTop}>
-            <span>VOYAGE LOG</span>
-            <span>
-              {activeChapter.step} / {chapters.length.toString().padStart(2, "0")}
-            </span>
+        <div className={styles.voyageActiveCopy}>
+          <p>{activeChapter.time}</p>
+          <h3>{activeChapter.title}</h3>
+          <span>{activeChapter.meta}</span>
+        </div>
+
+        <div className={styles.voyageTrack} aria-hidden="true">
+          <div className={styles.voyageTrackLine}>
+            <i
+              style={{
+                width: `${
+                  chapters.length <= 1
+                    ? 100
+                    : (activeIndex / (chapters.length - 1)) * 100
+                }%`,
+              }}
+            />
           </div>
 
-          <div className={styles.voyageCoordinates}>
-            <small>{activeChapter.time}</small>
-            <strong>{activeChapter.meta}</strong>
-          </div>
-
-          <div className={styles.voyageProgress}>
+          <div className={styles.voyageTrackLabels}>
             {chapters.map((chapter, index) => (
-              <button
-                key={chapter.step}
-                className={index === activeIndex ? styles.isActive : ""}
-                type="button"
-                aria-label={`Go to ${chapter.title}`}
-                onClick={() => {
-                  stepRefs.current[index]?.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center",
-                  });
-                }}
+              <span
+                key={chapter.label}
+                className={index <= activeIndex ? styles.isPassed : ""}
               >
-                <span />
-              </button>
+                {chapter.label}
+              </span>
             ))}
           </div>
         </div>
       </div>
 
-      <div className={styles.voyageCopyRail}>
+      <div className={styles.voyageScrollRail}>
         {chapters.map((chapter, index) => (
           <article
-            key={chapter.step}
+            key={chapter.label}
             ref={(node) => {
-              stepRefs.current[index] = node;
+              chapterRefs.current[index] = node;
             }}
             data-index={index}
-            className={`${styles.voyageChapter} ${
+            className={`${styles.voyageMoment} ${
               index === activeIndex ? styles.isActive : ""
             }`}
           >
-            <span className={styles.voyageChapterNumber}>{chapter.step}</span>
-
             <div>
-              <p className={styles.voyageTime}>{chapter.time}</p>
+              <span className={styles.voyageMomentLabel}>{chapter.label}</span>
               <h3>{chapter.title}</h3>
-              <p className={styles.voyageBody}>{chapter.body}</p>
-              <span className={styles.voyageMetaMobile}>{chapter.meta}</span>
+              <p>{chapter.body}</p>
             </div>
           </article>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

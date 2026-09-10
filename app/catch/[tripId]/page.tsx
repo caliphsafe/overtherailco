@@ -51,38 +51,38 @@ export default async function CatchTripPage({
 
   const chapters = [
     {
-      step: "01",
+      label: "HARBOR",
       time: "SEP 02 · 04:42 AM",
-      title: "Leaving New Bedford before sunrise.",
+      title: "New Bedford before sunrise.",
       body:
-        "F/V Viking Power clears the harbor in the dark and begins a six-day scallop trip out of the working waterfront.",
+        "F/V Viking Power clears the harbor in the dark. The city falls behind and a six-day scallop trip begins.",
       meta: "NEW BEDFORD HARBOR",
       video: trip.media[0]?.src || "/hero.mp4",
     },
     {
-      step: "02",
+      label: "OFFSHORE",
       time: "SEP 03 · NORTH ATLANTIC",
-      title: "The offshore rhythm sets in.",
+      title: "Then the shoreline disappears.",
       body:
-        "Watches, tows, hauling gear, sorting scallops, icing the catch, and repeating the work that keeps the trip moving.",
+        "Watches, tows, hauling gear, sorting scallops, icing the catch — the steady rhythm of work offshore.",
       meta: trip.trip.weather,
       video: trip.media[1]?.src || "/about.mp4",
     },
     {
-      step: "03",
+      label: "GROUNDS",
       time: "SEP 03–06 · GEORGES BANK",
-      title: "The scallop grounds come into focus.",
+      title: "Cold water. Open sea. The scallop grounds.",
       body:
-        "For this sample voyage, the route reaches the Georges Bank region — cold North Atlantic water tied to one of the most storied scallop fisheries.",
+        "For this sample voyage, the route reaches the Georges Bank region, where the catch comes aboard and the journey turns toward home.",
       meta: trip.trip.harvestArea,
       video: trip.media[2]?.src || "/shop.mp4",
     },
     {
-      step: "04",
+      label: "HOME",
       time: "SEP 07 · 06:18 PM",
-      title: "Back through the harbor and onto shore.",
+      title: "The harbor returns.",
       body:
-        "The Viking Power returns with the catch on ice, handing the journey forward to Fleet Fisheries' shore-side receiving and cold handling.",
+        "Viking Power comes back through New Bedford with the catch cold and the trip complete. From here, Fleet Fisheries takes the handoff ashore.",
       meta: trip.trip.landedAt,
       video: trip.media[3]?.src || "/contact.mp4",
     },
@@ -107,137 +107,93 @@ export default async function CatchTripPage({
         <div className={styles.tripHeroWash} aria-hidden="true" />
 
         <div className={styles.marineTopbar}>
-          <span>NEW BEDFORD · ATLANTIC SEA SCALLOPS</span>
+          <span>NEW BEDFORD · NORTH ATLANTIC</span>
           <span>{trip.publicTripCode}</span>
         </div>
 
-        <div className={styles.tripHeroContent}>
-          <div className={styles.heroLogoWrap}>
-            <CatchCollabMark />
+        <div className={styles.tripHeroGrid}>
+          <div className={styles.tripHeroCopy}>
+            {trip.demo && trip.demoNote && (
+              <div className={styles.sampleFlag}>{trip.demoNote}</div>
+            )}
+
+            <p className={styles.oceanKicker}>
+              {trip.product.name} · {trip.vessel.homePort}
+            </p>
+
+            <h1>
+              The journey
+              <br />
+              behind
+              <br />
+              <em>your seafood.</em>
+            </h1>
+
+            <p className={styles.tripHeroLead}>
+              Caught aboard {trip.vessel.name}. Worked offshore in the North
+              Atlantic. Landed in New Bedford. A catch with a place, a boat,
+              and people behind it.
+            </p>
+
+            <div className={styles.tripHeroActions}>
+              <a href="#journey" className={styles.diveButton}>
+                Begin at the harbor <span aria-hidden="true">↓</span>
+              </a>
+
+              <CatchShareButton
+                title={`${trip.product.name} · ${trip.vessel.name}`}
+              />
+            </div>
           </div>
 
-          {trip.demo && trip.demoNote && (
-            <div className={styles.sampleFlag}>{trip.demoNote}</div>
-          )}
+          <div className={styles.heroBrandStage}>
+            <span className={styles.heroBrandCoordinate}>
+              41.6362° N · 70.9342° W
+            </span>
 
-          <p className={styles.oceanKicker}>
-            YOUR SCALLOPS · {trip.vessel.homePort}
-          </p>
+            <CatchCollabMark />
 
-          <h1>
-            The journey
-            <br />
-            behind
-            <br />
-            <em>your seafood.</em>
-          </h1>
-
-          <p className={styles.tripHeroLead}>
-            Caught aboard {trip.vessel.name}. Worked offshore in the North Atlantic.
-            Landed in New Bedford. Handled by Fleet Fisheries. Brought to you with a story you can follow.
-          </p>
-
-          <div className={styles.tripHeroActions}>
-            <a href="#voyage" className={styles.diveButton}>
-              Start the voyage <span aria-hidden="true">↓</span>
-            </a>
-
-            <CatchShareButton
-              title={`${trip.product.name} · ${trip.vessel.name}`}
-            />
+            <div className={styles.heroBrandCaption}>
+              <span>Fleet Fisheries × Over The Rail Co.</span>
+              <span>New Bedford · Massachusetts</span>
+            </div>
           </div>
         </div>
 
-        <div className={styles.catchRibbon}>
-          <div>
-            <span>VESSEL</span>
-            <strong>{trip.vessel.name}</strong>
-          </div>
-
-          <div>
-            <span>CAPTAIN</span>
-            <strong>{trip.vessel.captain}</strong>
-          </div>
-
-          <div>
-            <span>AT SEA</span>
-            <strong>{trip.trip.duration}</strong>
-          </div>
-
-          <div>
-            <span>CATCH</span>
-            <strong>{trip.product.name}</strong>
-          </div>
+        <div className={styles.heroFactLine}>
+          <span>{trip.vessel.name}</span>
+          <i />
+          <span>Captain {trip.vessel.captain}</span>
+          <i />
+          <span>{trip.trip.duration} at sea</span>
+          <i />
+          <span>{trip.trip.harvestArea}</span>
         </div>
       </section>
 
-      <section className={styles.voyageSection} id="voyage">
-        <div className={styles.voyageHeading}>
-          <p className={styles.sectionTag}>THE JOURNEY</p>
+      <section className={styles.journeyPrelude} id="journey">
+        <div className={styles.journeyPreludeInner}>
+          <p className={styles.sectionTag}>THE VOYAGE</p>
+
           <h2>
-            From harbor,
+            Your scallops
             <br />
-            to grounds,
+            traveled farther
             <br />
-            to you.
+            <em>than you did today.</em>
           </h2>
 
-          <p className={styles.voyageIntro}>
-            This is the part that matters most — the path your scallops took
-            before they ever reached your kitchen.
+          <p>
+            They left New Bedford before sunrise, crossed into the North
+            Atlantic, came aboard on the scallop grounds, and returned through
+            the same harbor days later.
           </p>
-
-          <div className={styles.voyageSummary}>
-            <div>
-              <span>DEPARTED</span>
-              <strong>{trip.trip.departed}</strong>
-            </div>
-
-            <div>
-              <span>HARVEST REGION</span>
-              <strong>{trip.trip.harvestArea}</strong>
-            </div>
-
-            <div>
-              <span>LANDED</span>
-              <strong>{trip.trip.landed}</strong>
-            </div>
-          </div>
         </div>
-
-        <CatchVoyageExperience chapters={chapters} />
       </section>
+
+      <CatchVoyageExperience chapters={chapters} />
 
       <section className={styles.chartSection}>
-        <div className={styles.chartCopy}>
-          <p className={styles.sectionTag}>THE WATER</p>
-
-          <h2>
-            New Bedford
-            <br />
-            to the
-            <br />
-            <em>North Atlantic.</em>
-          </h2>
-
-          <div className={styles.chartFacts}>
-            <div>
-              <span>DEPARTED</span>
-              <strong>{trip.trip.departed}</strong>
-            </div>
-
-            <div>
-              <span>HARVEST REGION</span>
-              <strong>{trip.trip.harvestArea}</strong>
-            </div>
-
-            <div>
-              <span>LANDED</span>
-              <strong>{trip.trip.landed}</strong>
-            </div>
-          </div>
-        </div>
-
         <div className={styles.chartPanel}>
           <div className={styles.chartGrid} aria-hidden="true" />
 
@@ -291,143 +247,119 @@ export default async function CatchTripPage({
             <i />
           </div>
 
-          <div className={styles.chartLegend}>
-            <span><i className={styles.orangeDot} /> DEPARTURE / RETURN</span>
-            <span><i className={styles.blueDot} /> SAMPLE HARVEST REGION</span>
-          </div>
-        </div>
-      </section>
+          <div className={styles.mapStory}>
+            <p className={styles.sectionTag}>FROM PORT TO GROUNDS</p>
 
-      <section className={styles.seaIntro}>
-        <div className={styles.waveField} aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
-
-        <div className={styles.seaIntroGrid}>
-          <div>
-            <p className={styles.sectionTag}>THE CATCH</p>
             <h2>
-              Before dinner,
+              New Bedford
               <br />
-              there was
+              out into
               <br />
-              <em>the Atlantic.</em>
+              <em>blue water.</em>
             </h2>
-          </div>
-
-          <div className={styles.catchIdentity}>
-            <div className={styles.scallopOrb} aria-hidden="true">
-              <span>SEA</span>
-              <strong>SCALLOPS</strong>
-              <small>NORTH ATLANTIC</small>
-            </div>
 
             <p>
-              This box carries more than seafood. It carries a vessel name,
-              a captain, a home port, and the trace of a voyage that began in
-              New Bedford.
+              The exact tow is part of the working knowledge of the boat.
+              What you see here is the broader harvest region connected to
+              this sample catch.
             </p>
+          </div>
+
+          <div className={styles.mapMeta}>
+            <span>{trip.trip.departed}</span>
+            <i />
+            <span>{trip.trip.harvestArea}</span>
+            <i />
+            <span>{trip.trip.landed}</span>
           </div>
         </div>
       </section>
 
-      <section className={styles.mediaSection}>
-        <div className={styles.mediaHeader}>
-          <p className={styles.sectionTag}>ON THE WATER</p>
+      <section className={styles.catchReveal}>
+        <div className={styles.catchRevealInner}>
+          <p className={styles.sectionTag}>THE CATCH</p>
+
           <h2>
-            What the trip
+            Atlantic sea
             <br />
-            felt like.
+            scallops.
           </h2>
-        </div>
 
-        <div className={styles.mediaGrid}>
-          {trip.media.map((item, index) => (
-            <article
-              className={`${styles.mediaCard} ${
-                index === 0 ? styles.mediaCardLarge : ""
-              }`}
-              key={`${item.src}-${item.title}`}
-            >
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-hidden="true"
-              >
-                <source src={item.src} type="video/mp4" />
-              </video>
-
-              <div className={styles.mediaShade} />
-
-              <div className={styles.mediaCopy}>
-                <span>{item.eyebrow}</span>
-                <h3>{item.title}</h3>
-                <p>{item.caption}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className={styles.vesselSection}>
-        <div className={styles.vesselHeading}>
-          <p className={styles.sectionTag}>MEET THE BOAT</p>
-          <h2>{trip.vessel.name}</h2>
-          <p>
-            A modern Fleet Fisheries commercial scalloper working from
-            New Bedford, Massachusetts.
+          <p className={styles.catchRevealLead}>
+            Not anonymous. Not separated from the story that brought them
+            ashore. This box traces back to {trip.vessel.name}, Captain{" "}
+            {trip.vessel.captain}, and New Bedford.
           </p>
-        </div>
 
-        <div className={styles.vesselStats}>
-          <VesselStat label="CAPTAIN" value={trip.vessel.captain} />
-          <VesselStat label="BUILT" value={trip.vessel.built} />
-          <VesselStat label="LENGTH" value={trip.vessel.length} />
-          <VesselStat label="BEAM" value={trip.vessel.beam} />
-          <VesselStat label="HULL" value={trip.vessel.hull} />
-          <VesselStat label="OFFICIAL NO." value={trip.vessel.officialNumber} />
-        </div>
-
-        <div className={styles.vesselBand}>
-          <span>NEW BEDFORD</span>
-          <i />
-          <span>STEEL HULL</span>
-          <i />
-          <span>SCALLOP FISHERY</span>
-          <i />
-          <span>100 FT</span>
+          <div className={styles.catchHalo} aria-hidden="true">
+            <span>SEA SCALLOPS</span>
+            <small>NORTH ATLANTIC</small>
+          </div>
         </div>
       </section>
 
-      <section className={styles.shoreSection}>
-        <div className={styles.shoreHeader}>
+      <section className={styles.vesselStory}>
+        <video
+          className={styles.fullVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
+        >
+          <source src={trip.media[1]?.src || "/about.mp4"} type="video/mp4" />
+        </video>
+
+        <div className={styles.vesselStoryWash} aria-hidden="true" />
+
+        <div className={styles.vesselStoryInner}>
+          <p className={styles.sectionTag}>THE VESSEL</p>
+
+          <h2>{trip.vessel.name}</h2>
+
+          <p className={styles.vesselStoryLead}>
+            A steel commercial scalloper working from New Bedford under
+            Captain {trip.vessel.captain}.
+          </p>
+
+          <div className={styles.vesselSpecLine}>
+            <span>Built {trip.vessel.built}</span>
+            <i />
+            <span>{trip.vessel.length}</span>
+            <i />
+            <span>{trip.vessel.beam} beam</span>
+            <i />
+            <span>{trip.vessel.hull} hull</span>
+            <i />
+            <span>Official No. {trip.vessel.officialNumber}</span>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.shoreStory}>
+        <div className={styles.shoreStoryIntro}>
           <p className={styles.sectionTag}>BACK ON SHORE</p>
 
           <h2>
-            Sea.
+            The trip ends.
             <br />
-            Shore.
+            The cold chain
             <br />
-            <em>Your door.</em>
+            <em>doesn&apos;t.</em>
           </h2>
 
           <p>
-            Fleet Fisheries tracks fresh scallop lots from vessel to customer
-            and maintains cold handling through its shore-side operation in
-            New Bedford.
+            From landing through refrigerated handling, the catch keeps its
+            identity as it moves from vessel to shore and toward your door.
           </p>
         </div>
 
-        <div className={styles.milestoneRail}>
+        <div className={styles.shoreFlow}>
           {trip.milestones.map((milestone) => (
-            <article key={milestone.step}>
-              <span className={styles.milestoneNumber}>{milestone.step}</span>
-              <span className={styles.milestoneTime}>{milestone.time}</span>
+            <article key={`${milestone.time}-${milestone.title}`}>
+              <span>{milestone.time}</span>
               <h3>{milestone.title}</h3>
               <p>{milestone.detail}</p>
             </article>
@@ -435,50 +367,50 @@ export default async function CatchTripPage({
         </div>
       </section>
 
-      <section className={styles.boxSection}>
-        <div className={styles.boxCard}>
-          <div className={styles.boxTopline}>
-            <span>YOUR BOX</span>
-            <span>{trip.product.lotCode}</span>
-          </div>
-
-          <p className={styles.boxOrigin}>NORTH ATLANTIC · NEW BEDFORD</p>
+      <section className={styles.provenanceSection}>
+        <div className={styles.provenanceInner}>
+          <p className={styles.sectionTag}>THIS BOX</p>
 
           <h2>{trip.product.name}</h2>
 
-          <div className={styles.boxDetails}>
+          <p className={styles.provenanceIntro}>
+            {trip.product.pack}. Landed in New Bedford and connected back to
+            the vessel that brought it home.
+          </p>
+
+          <dl className={styles.provenanceFacts}>
             <div>
-              <span>PACK</span>
-              <strong>{trip.product.pack}</strong>
+              <dt>Vessel</dt>
+              <dd>{trip.vessel.name}</dd>
             </div>
 
             <div>
-              <span>VESSEL</span>
-              <strong>{trip.vessel.name}</strong>
+              <dt>Captain</dt>
+              <dd>{trip.vessel.captain}</dd>
             </div>
 
             <div>
-              <span>CAPTAIN</span>
-              <strong>{trip.vessel.captain}</strong>
+              <dt>Harvest region</dt>
+              <dd>{trip.trip.harvestArea}</dd>
             </div>
 
             <div>
-              <span>LOT</span>
-              <strong>{trip.product.lotCode}</strong>
+              <dt>Landed</dt>
+              <dd>{trip.trip.landedAt}</dd>
             </div>
 
             <div>
-              <span>LANDED</span>
-              <strong>{trip.trip.landedAt}</strong>
+              <dt>Lot</dt>
+              <dd>{trip.product.lotCode}</dd>
             </div>
 
             <div>
-              <span>TRIP</span>
-              <strong>{trip.publicTripCode}</strong>
+              <dt>Catch code</dt>
+              <dd>{trip.publicTripCode}</dd>
             </div>
-          </div>
+          </dl>
 
-          <div className={styles.boxActions}>
+          <div className={styles.provenanceActions}>
             <CatchShareButton
               title={`${trip.product.name} · ${trip.vessel.name}`}
             />
@@ -527,20 +459,5 @@ export default async function CatchTripPage({
         </div>
       </section>
     </div>
-  );
-}
-
-function VesselStat({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
-  return (
-    <article className={styles.vesselStat}>
-      <span>{label}</span>
-      <strong>{value}</strong>
-    </article>
   );
 }
