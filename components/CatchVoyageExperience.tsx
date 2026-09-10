@@ -16,69 +16,160 @@ type CatchVoyageExperienceProps = {
   chapters: VoyageChapter[];
 };
 
+function clamp(value: number, minimum = 0, maximum = 1) {
+  return Math.min(Math.max(value, minimum), maximum);
+}
+
 export default function CatchVoyageExperience({
   chapters,
 }: CatchVoyageExperienceProps) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+
   const [activeIndex, setActiveIndex] = useState(0);
-  const chapterRefs = useRef<Array<HTMLElement | null>>([]);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-        if (!visible[0]) {
-          return;
-        }
-
-        const nextIndex = Number(
-          (visible[0].target as HTMLElement).dataset.index
-        );
-
-        if (!Number.isNaN(nextIndex)) {
-          setActiveIndex(nextIndex);
-        }
-      },
-      {
-        rootMargin: "-30% 0px -38% 0px",
-        threshold: [0.05, 0.25, 0.5, 0.75],
+    // Start buffering every chapter as soon as this component mounts.
+    // All video elements remain mounted for the entire voyage, so a chapter
+    // change is only an opacity crossfade — no source swap or new request.
+    videoRefs.current.forEach((video) => {
+      if (!video) {
+        return;
       }
-    );
 
-    chapterRefs.current.forEach((node) => {
-      if (node) {
-        observer.observe(node);
+      video.preload = "auto";
+
+      if (video.readyState < HTMLMediaElement.HAVE_FUTURE_DATA) {
+        video.load();
       }
     });
-
-    return () => observer.disconnect();
   }, []);
 
-  const activeChapter = chapters[activeIndex] || chapters[0];
+  useEffect(() => {
+    let frame = 0;
+
+    const updateProgress = () => {
+      frame = 0;
+
+      const section = sectionRef.current;
+
+      if (!section || chapters.length === 0) {
+        return;
+      }
+
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const scrollableDistance = Math.max(
+        rect.height - viewportHeight,
+        1
+      );
+
+      const progress = clamp(
+        -rect.top / scrollableDistance
+      );
+
+      const nextIndex = Math.min(
+        Math.floor(progress * chapters.length),
+        chapters.length - 1
+      );
+
+      setScrollProgress(progress);
+      setActiveIndex(nextIndex);
+    };
+
+    const requestUpdate = () => {
+      if (frame) {
+        return;
+      }
+
+      frame = window.requestAnimationFrame(updateProgress);
+    };
+
+    updateProgress();
+
+    window.addEventListener("scroll", requestUpdate, {
+      passive: true,
+    });
+
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+
+      if (frame) {
+        window.cancelAnimationFrame(frame);
+      }
+    };
+  }, [chapters.length]);
+
+  useEffect(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (!video) {
+        return;
+      }
+
+      if (index === activeIndex) {
+        const playPromise = video.play();
+
+        if (playPromise) {
+          playPromise.catch(() => {
+            // Muted autoplay can still be interrupted by browser policy.
+          });
+        }
+      } else {
+        video.pause();
+      }
+    });
+  }, [activeIndex]);
+
+  const activeChapter = chapters[activeIndex];
 
   if (!activeChapter) {
     return null;
   }
 
+  const markerTop = `${scrollProgress * 100}%`;
+
   return (
-    <section className={styles.voyageExperience} aria-label="Fishing voyage">
+    <section
+      ref={sectionRef}
+      className={styles.voyageExperience}
+      aria-label="Fishing voyage"
+    >
       <div className={styles.voyageCanvas}>
-        <video
-          key={activeChapter.video}
-          className={styles.voyageVideo}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
+        <div
+          className={styles.voyageVideoStack}
           aria-hidden="true"
         >
-          <source src={activeChapter.video} type="video/mp4" />
-        </video>
+          {chapters.map((chapter, index) => (
+            <video
+              key={chapter.video}
+              ref={(node) => {
+                videoRefs.current[index] = node;
+              }}
+              className={`${styles.voyageVideoLayer} ${
+                index === activeIndex ? styles.isActive : ""
+              }`}
+              muted
+              loop
+              playsInline
+              preload="auto"
+              tabIndex={-1}
+            >
+              <source
+                src={chapter.video}
+                type="video/mp4"
+              />
+            </video>
+          ))}
+        </div>
 
-        <div className={styles.voyageShade} aria-hidden="true" />
+        <div
+          className={styles.voyageShade}
+          aria-hidden="true"
+        />
 
         <div className={styles.voyageActiveCopy}>
           <p>{activeChapter.time}</p>
@@ -86,50 +177,97 @@ export default function CatchVoyageExperience({
           <span>{activeChapter.meta}</span>
         </div>
 
-        <div className={styles.voyageTrack} aria-hidden="true">
-          <div className={styles.voyageTrackLine}>
+        <div
+          className={styles.voyageVerticalGuide}
+          aria-hidden="true"
+        >
+          <div className={styles.voyageGuideLine}>
             <i
+              className={styles.voyageGuideFill}
               style={{
-                width: `${
-                  chapters.length <= 1
-                    ? 100
-                    : (activeIndex / (chapters.length - 1)) * 100
-                }%`,
+                height: markerTop,
               }}
             />
+
+            <div
+              className={styles.voyageBoatMarker}
+              style={{
+                top: markerTop,
+              }}
+            >
+              <svg
+                viewBox="0 0 34 34"
+                role="presentation"
+              >
+                <path
+                  d="M4.5 19.7h25l-4.1 6.1H9.1l-4.6-6.1Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M12 18.7V10h7.5l3.7 8.7"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M14.4 10V6.8h2V10"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+
+            <span className={styles.voyageGuideArrow}>
+              ↓
+            </span>
           </div>
 
-          <div className={styles.voyageTrackLabels}>
-            {chapters.map((chapter, index) => (
-              <span
-                key={chapter.label}
-                className={index <= activeIndex ? styles.isPassed : ""}
-              >
-                {chapter.label}
-              </span>
-            ))}
+          <div className={styles.voyageGuideStations}>
+            {chapters.map((chapter, index) => {
+              const position =
+                chapters.length <= 1
+                  ? 0
+                  : (index / (chapters.length - 1)) * 100;
+
+              return (
+                <span
+                  key={chapter.label}
+                  className={`${styles.voyageGuideStation} ${
+                    index === activeIndex
+                      ? styles.isActive
+                      : ""
+                  } ${
+                    index < activeIndex
+                      ? styles.isPassed
+                      : ""
+                  }`}
+                  style={{
+                    top: `${position}%`,
+                  }}
+                >
+                  <i />
+                  <b>{chapter.label}</b>
+                </span>
+              );
+            })}
           </div>
+        </div>
+
+        <div className={styles.voyageMomentCopy}>
+          <span>{activeChapter.label}</span>
+          <p>{activeChapter.body}</p>
         </div>
       </div>
 
-      <div className={styles.voyageScrollRail}>
-        {chapters.map((chapter, index) => (
-          <article
+      <div
+        className={styles.voyageScrollRail}
+        aria-hidden="true"
+      >
+        {chapters.map((chapter) => (
+          <div
+            className={styles.voyageScrollMoment}
             key={chapter.label}
-            ref={(node) => {
-              chapterRefs.current[index] = node;
-            }}
-            data-index={index}
-            className={`${styles.voyageMoment} ${
-              index === activeIndex ? styles.isActive : ""
-            }`}
-          >
-            <div>
-              <span className={styles.voyageMomentLabel}>{chapter.label}</span>
-              <h3>{chapter.title}</h3>
-              <p>{chapter.body}</p>
-            </div>
-          </article>
+          />
         ))}
       </div>
     </section>
