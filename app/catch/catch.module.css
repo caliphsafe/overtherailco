@@ -66,73 +66,30 @@
 .collabMark {
   display: inline-flex;
   align-items: center;
-  gap: clamp(12px, 1.7vw, 25px);
-
-  min-width: 0;
-}
-
-.fleetLogo {
-  width: clamp(170px, 18vw, 300px);
-  max-height: 92px;
-
-  object-fit: contain;
-
-  background: transparent;
-}
-
-.otrLogo {
-  width: clamp(72px, 7vw, 108px);
-  height: clamp(72px, 7vw, 108px);
-
-  object-fit: contain;
-
-  background: transparent;
-}
-
-.collabDivider {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-
-  color: var(--orange);
-}
-
-.collabDivider i {
-  width: 18px;
-  height: 1px;
-
-  display: block;
-
-  background: currentColor;
-
-  opacity: 0.55;
-}
-
-.collabDivider b {
-  font-size: 13px;
-  font-weight: 900;
-}
-
-.collabMarkCompact .fleetLogo {
-  width: clamp(125px, 14vw, 205px);
-  max-height: 58px;
-}
-
-.collabMarkCompact .otrLogo {
-  width: 48px;
-  height: 48px;
-}
-
-.collabMarkCompact .collabDivider {
-  gap: 7px;
-}
-
-.collabMarkCompact .collabDivider i {
-  width: 10px;
-}
-
-.collabMarkInverse {
   justify-content: center;
+}
+
+.collabLogo {
+  width: min(100%, clamp(280px, 34vw, 620px));
+  max-height: 168px;
+
+  object-fit: contain;
+
+  background: transparent;
+  filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.22));
+}
+
+.collabMarkCompact .collabLogo {
+  width: clamp(190px, 20vw, 320px);
+  max-height: 78px;
+}
+
+.collabMarkInverse .collabLogo {
+  width: min(100%, clamp(280px, 30vw, 520px));
+}
+
+.heroLogoWrap {
+  margin-bottom: 22px;
 }
 
 /* =========================================
@@ -1752,6 +1709,60 @@
   letter-spacing: 0.12em;
 }
 
+
+.voyageIntro {
+  max-width: 660px;
+
+  margin: 28px 0 0;
+
+  color: rgba(255, 255, 255, 0.7);
+
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.7;
+}
+
+.voyageSummary {
+  margin-top: 34px;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.voyageSummary > div {
+  min-height: 112px;
+
+  padding: 16px 18px;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.voyageSummary span {
+  display: block;
+
+  color: var(--orange-soft);
+
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.voyageSummary strong {
+  margin-top: 10px;
+
+  display: block;
+
+  color: var(--white);
+
+  font-size: 12px;
+  line-height: 1.55;
+  font-weight: 800;
+}
+
 /* =========================================
    TABLET
 ========================================= */
@@ -1838,25 +1849,13 @@
     gap: 12px;
   }
 
-  .marineTopbar > span {
+  .marineTopbar > span:last-child {
     display: none;
   }
 
-  .collabMark {
-    gap: 8px;
-  }
-
-  .collabMarkCompact .fleetLogo {
-    width: 118px;
-  }
-
-  .collabMarkCompact .otrLogo {
-    width: 39px;
-    height: 39px;
-  }
-
-  .collabDivider i {
-    display: none;
+  .collabMarkCompact .collabLogo {
+    width: 210px;
+    max-height: 66px;
   }
 
   .lookupContent {
@@ -2002,6 +2001,14 @@
     padding-bottom: 42px;
   }
 
+  .voyageIntro {
+    font-size: 15px;
+  }
+
+  .voyageSummary {
+    grid-template-columns: 1fr;
+  }
+
   .voyageSticky {
     height: 58vh;
     min-height: 430px;
@@ -2132,18 +2139,9 @@
     margin-bottom: 38px;
   }
 
-  .collabMark:not(.collabMarkCompact) {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .collabMark:not(.collabMarkCompact) .fleetLogo {
-    width: min(70vw, 270px);
-  }
-
-  .collabMark:not(.collabMarkCompact) .otrLogo {
-    width: 82px;
-    height: 82px;
+  .collabMark:not(.collabMarkCompact) .collabLogo {
+    width: min(82vw, 360px);
+    max-height: 120px;
   }
 
   .finaleFooter {

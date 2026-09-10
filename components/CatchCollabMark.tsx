@@ -21,21 +21,9 @@ export default function CatchCollabMark({
       aria-label="Fleet Fisheries and Over The Rail Co. collaboration"
     >
       <img
-        className={styles.fleetLogo}
-        src="/fleet.png"
-        alt="Fleet Fisheries"
-      />
-
-      <span className={styles.collabDivider} aria-hidden="true">
-        <i />
-        <b>×</b>
-        <i />
-      </span>
-
-      <img
-        className={styles.otrLogo}
-        src="/icon.png"
-        alt="Over The Rail Co."
+        className={styles.collabLogo}
+        src="/otrfleet.png"
+        alt="Fleet Fisheries × Over The Rail Co."
       />
     </div>
   );

@@ -53,36 +53,36 @@ export default async function CatchTripPage({
     {
       step: "01",
       time: "SEP 02 · 04:42 AM",
-      title: "New Bedford before sunrise.",
+      title: "Leaving New Bedford before sunrise.",
       body:
-        "F/V Viking Power clears the harbor while the city is still dark. A six-day scallop trip begins at the working waterfront.",
+        "F/V Viking Power clears the harbor in the dark and begins a six-day scallop trip out of the working waterfront.",
       meta: "NEW BEDFORD HARBOR",
       video: trip.media[0]?.src || "/hero.mp4",
     },
     {
       step: "02",
       time: "SEP 03 · NORTH ATLANTIC",
-      title: "Land drops below the horizon.",
+      title: "The offshore rhythm sets in.",
       body:
-        "Offshore, the rhythm changes to watches, tows, hauling gear, sorting scallops, icing the catch, and doing it again.",
+        "Watches, tows, hauling gear, sorting scallops, icing the catch, and repeating the work that keeps the trip moving.",
       meta: trip.trip.weather,
       video: trip.media[1]?.src || "/about.mp4",
     },
     {
       step: "03",
       time: "SEP 03–06 · GEORGES BANK",
-      title: "The scallop grounds.",
+      title: "The scallop grounds come into focus.",
       body:
-        "For this sample voyage, the route reaches the Georges Bank region — one of the North Atlantic's storied fishing grounds.",
+        "For this sample voyage, the route reaches the Georges Bank region — cold North Atlantic water tied to one of the most storied scallop fisheries.",
       meta: trip.trip.harvestArea,
       video: trip.media[2]?.src || "/shop.mp4",
     },
     {
       step: "04",
       time: "SEP 07 · 06:18 PM",
-      title: "Home through New Bedford.",
+      title: "Back through the harbor and onto shore.",
       body:
-        "The Viking Power returns with the catch on ice. Offshore work gives way to Fleet Fisheries' shore-side receiving and handling.",
+        "The Viking Power returns with the catch on ice, handing the journey forward to Fleet Fisheries' shore-side receiving and cold handling.",
       meta: trip.trip.landedAt,
       video: trip.media[3]?.src || "/contact.mp4",
     },
@@ -107,11 +107,15 @@ export default async function CatchTripPage({
         <div className={styles.tripHeroWash} aria-hidden="true" />
 
         <div className={styles.marineTopbar}>
-          <CatchCollabMark compact />
+          <span>NEW BEDFORD · ATLANTIC SEA SCALLOPS</span>
           <span>{trip.publicTripCode}</span>
         </div>
 
         <div className={styles.tripHeroContent}>
+          <div className={styles.heroLogoWrap}>
+            <CatchCollabMark />
+          </div>
+
           {trip.demo && trip.demoNote && (
             <div className={styles.sampleFlag}>{trip.demoNote}</div>
           )}
@@ -121,20 +125,21 @@ export default async function CatchTripPage({
           </p>
 
           <h1>
-            Caught aboard
+            The journey
             <br />
-            <em>{trip.vessel.name}</em>
+            behind
+            <br />
+            <em>your seafood.</em>
           </h1>
 
           <p className={styles.tripHeroLead}>
-            Six days offshore. A New Bedford scalloper. Atlantic sea scallops
-            carried from the North Atlantic back to the working waterfront —
-            and now to you.
+            Caught aboard {trip.vessel.name}. Worked offshore in the North Atlantic.
+            Landed in New Bedford. Handled by Fleet Fisheries. Brought to you with a story you can follow.
           </p>
 
           <div className={styles.tripHeroActions}>
             <a href="#voyage" className={styles.diveButton}>
-              Follow the voyage <span aria-hidden="true">↓</span>
+              Start the voyage <span aria-hidden="true">↓</span>
             </a>
 
             <CatchShareButton
@@ -166,79 +171,38 @@ export default async function CatchTripPage({
         </div>
       </section>
 
-      <section className={styles.seaIntro}>
-        <div className={styles.waveField} aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
-
-        <div className={styles.seaIntroGrid}>
-          <div>
-            <p className={styles.sectionTag}>THE CATCH</p>
-            <h2>
-              Before dinner,
-              <br />
-              there was
-              <br />
-              <em>the Atlantic.</em>
-            </h2>
-          </div>
-
-          <div className={styles.catchIdentity}>
-            <div className={styles.scallopOrb} aria-hidden="true">
-              <span>SEA</span>
-              <strong>SCALLOPS</strong>
-              <small>NORTH ATLANTIC</small>
-            </div>
-
-            <p>
-              This box carries more than seafood. It carries a vessel name,
-              a captain, a home port, and the trace of a voyage that began in
-              New Bedford.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.vesselSection}>
-        <div className={styles.vesselHeading}>
-          <p className={styles.sectionTag}>MEET THE BOAT</p>
-          <h2>{trip.vessel.name}</h2>
-          <p>
-            A modern Fleet Fisheries commercial scalloper working from
-            New Bedford, Massachusetts.
-          </p>
-        </div>
-
-        <div className={styles.vesselStats}>
-          <VesselStat label="CAPTAIN" value={trip.vessel.captain} />
-          <VesselStat label="BUILT" value={trip.vessel.built} />
-          <VesselStat label="LENGTH" value={trip.vessel.length} />
-          <VesselStat label="BEAM" value={trip.vessel.beam} />
-          <VesselStat label="HULL" value={trip.vessel.hull} />
-          <VesselStat label="OFFICIAL NO." value={trip.vessel.officialNumber} />
-        </div>
-
-        <div className={styles.vesselBand}>
-          <span>NEW BEDFORD</span>
-          <i />
-          <span>STEEL HULL</span>
-          <i />
-          <span>SCALLOP FISHERY</span>
-          <i />
-          <span>100 FT</span>
-        </div>
-      </section>
-
       <section className={styles.voyageSection} id="voyage">
         <div className={styles.voyageHeading}>
-          <p className={styles.sectionTag}>VOYAGE · SEPTEMBER 2026</p>
+          <p className={styles.sectionTag}>THE JOURNEY</p>
           <h2>
-            Out past the
+            From harbor,
             <br />
-            last streetlight.
+            to grounds,
+            <br />
+            to you.
           </h2>
+
+          <p className={styles.voyageIntro}>
+            This is the part that matters most — the path your scallops took
+            before they ever reached your kitchen.
+          </p>
+
+          <div className={styles.voyageSummary}>
+            <div>
+              <span>DEPARTED</span>
+              <strong>{trip.trip.departed}</strong>
+            </div>
+
+            <div>
+              <span>HARVEST REGION</span>
+              <strong>{trip.trip.harvestArea}</strong>
+            </div>
+
+            <div>
+              <span>LANDED</span>
+              <strong>{trip.trip.landed}</strong>
+            </div>
+          </div>
         </div>
 
         <CatchVoyageExperience chapters={chapters} />
@@ -334,6 +298,41 @@ export default async function CatchTripPage({
         </div>
       </section>
 
+      <section className={styles.seaIntro}>
+        <div className={styles.waveField} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+
+        <div className={styles.seaIntroGrid}>
+          <div>
+            <p className={styles.sectionTag}>THE CATCH</p>
+            <h2>
+              Before dinner,
+              <br />
+              there was
+              <br />
+              <em>the Atlantic.</em>
+            </h2>
+          </div>
+
+          <div className={styles.catchIdentity}>
+            <div className={styles.scallopOrb} aria-hidden="true">
+              <span>SEA</span>
+              <strong>SCALLOPS</strong>
+              <small>NORTH ATLANTIC</small>
+            </div>
+
+            <p>
+              This box carries more than seafood. It carries a vessel name,
+              a captain, a home port, and the trace of a voyage that began in
+              New Bedford.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className={styles.mediaSection}>
         <div className={styles.mediaHeader}>
           <p className={styles.sectionTag}>ON THE WATER</p>
@@ -372,6 +371,36 @@ export default async function CatchTripPage({
               </div>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className={styles.vesselSection}>
+        <div className={styles.vesselHeading}>
+          <p className={styles.sectionTag}>MEET THE BOAT</p>
+          <h2>{trip.vessel.name}</h2>
+          <p>
+            A modern Fleet Fisheries commercial scalloper working from
+            New Bedford, Massachusetts.
+          </p>
+        </div>
+
+        <div className={styles.vesselStats}>
+          <VesselStat label="CAPTAIN" value={trip.vessel.captain} />
+          <VesselStat label="BUILT" value={trip.vessel.built} />
+          <VesselStat label="LENGTH" value={trip.vessel.length} />
+          <VesselStat label="BEAM" value={trip.vessel.beam} />
+          <VesselStat label="HULL" value={trip.vessel.hull} />
+          <VesselStat label="OFFICIAL NO." value={trip.vessel.officialNumber} />
+        </div>
+
+        <div className={styles.vesselBand}>
+          <span>NEW BEDFORD</span>
+          <i />
+          <span>STEEL HULL</span>
+          <i />
+          <span>SCALLOP FISHERY</span>
+          <i />
+          <span>100 FT</span>
         </div>
       </section>
 

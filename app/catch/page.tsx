@@ -47,24 +47,28 @@ export default async function CatchLandingPage({
         <div className={styles.lookupWash} aria-hidden="true" />
 
         <div className={styles.marineTopbar}>
-          <CatchCollabMark compact />
           <span>NEW BEDFORD · NORTH ATLANTIC</span>
+          <span>SEAFOOD TRACEABILITY</span>
         </div>
 
         <div className={styles.lookupContent}>
+          <div className={styles.heroLogoWrap}>
+            <CatchCollabMark />
+          </div>
+
           <p className={styles.oceanKicker}>FLEET FISHERIES × OVER THE RAIL CO.</p>
 
           <h1>
-            Every catch
+            Follow the
             <br />
-            begins
+            journey
             <br />
-            <em>somewhere.</em>
+            <em>to your table.</em>
           </h1>
 
           <p className={styles.lookupLead}>
-            The vessel. The water. The people. The trip behind the scallops
-            in your hands.
+            From the harbor, to the scallop grounds, to shore, to the box
+            in your hands — every catch has a story.
           </p>
 
           <form className={styles.lookupForm} action="/catch" method="get">
@@ -98,7 +102,7 @@ export default async function CatchLandingPage({
 
         <div className={styles.lookupWaterline} aria-hidden="true">
           <i />
-          <span>SEA · SHORE · TABLE</span>
+          <span>SEA · VOYAGE · SCALLOPS · SHORE</span>
           <i />
         </div>
       </section>
