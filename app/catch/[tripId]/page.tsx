@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  getCatchTrip,
-} from "@/lib/catch-trips";
+import CatchShareButton from "@/components/CatchShareButton";
+import CatchVoyageExperience from "@/components/CatchVoyageExperience";
+import { getCatchTrip } from "@/lib/catch-trips";
 import styles from "../catch.module.css";
 
 type CatchTripPageProps = {
@@ -12,8 +12,7 @@ type CatchTripPageProps = {
   }>;
 };
 
-export const dynamic =
-  "force-dynamic";
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -32,11 +31,11 @@ export async function generateMetadata({
   return {
     title: `${trip.product.name} · ${trip.publicTripCode}`,
     description:
-      "Trace the vessel, trip, general harvest area, and story behind your Over The Rail Co. × Fleet Fisheries seafood.",
+      "Step inside the fishing trip behind your Over The Rail Co. × Fleet Fisheries seafood.",
     openGraph: {
-      title: `Know Your Catch · ${trip.publicTripCode}`,
+      title: `Your Catch Has a Story · ${trip.publicTripCode}`,
       description:
-        "A digital catch passport connecting your seafood to the trip behind it.",
+        "Meet the vessel, follow the voyage, and trace this catch from sea to table.",
       type: "website",
     },
   };
@@ -52,11 +51,59 @@ export default async function CatchTripPage({
     notFound();
   }
 
+  const chapters = [
+    {
+      step: "01",
+      eyebrow: "Departure / New Bedford",
+      title: "Before your scallops reached you, a boat left the dock.",
+      body:
+        "Every package begins with a real departure. This record connects your scallops to the vessel and crew that left port to make the trip.",
+      meta: `${trip.trip.departed} · ${trip.vessel.homePort}`,
+      video: trip.media[0]?.src || "/hero.mp4",
+    },
+    {
+      step: "02",
+      eyebrow: "Offshore / The work",
+      title: "Then the shoreline disappeared.",
+      body:
+        "Offshore, the trip becomes long hours, changing weather, heavy gear, and the work required to bring the catch aboard.",
+      meta: `${trip.trip.duration} · ${trip.trip.harvestMethod}`,
+      video: trip.media[1]?.src || "/about.mp4",
+    },
+    {
+      step: "03",
+      eyebrow: "Harvest / Atlantic Ocean",
+      title: "This is the general area your catch came from.",
+      body:
+        "The exact commercial tow coordinates remain private, but this passport gives you a meaningful view of the documented harvest region tied to this trip.",
+      meta: trip.trip.harvestArea,
+      video: trip.media[2]?.src || "/shop.mp4",
+    },
+    {
+      step: "04",
+      eyebrow: "Return / Back to port",
+      title: "The trip came home before your seafood could head to you.",
+      body:
+        "After the work offshore, the vessel returned to port and the catch entered the handling and fulfillment process connected to this lot.",
+      meta: `${trip.trip.landed} · ${trip.trip.landedAt}`,
+      video: trip.media[3]?.src || "/contact.mp4",
+    },
+    {
+      step: "05",
+      eyebrow: "Arrival / Your table",
+      title: "And now the journey ends with you.",
+      body:
+        "The QR code closes the distance between the people who caught your food and the person preparing it. The package in your hands is connected back to the trip that produced it.",
+      meta: `Lot ${trip.product.lotCode}`,
+      video: trip.media[0]?.src || "/hero.mp4",
+    },
+  ];
+
   return (
     <div className={styles.page}>
-      <section className={styles.hero}>
+      <section className={styles.experienceHero}>
         <video
-          className={styles.heroVideo}
+          className={styles.experienceHeroVideo}
           autoPlay
           muted
           loop
@@ -72,12 +119,12 @@ export default async function CatchTripPage({
         </video>
 
         <div
-          className={styles.heroOverlay}
+          className={styles.experienceHeroOverlay}
           aria-hidden="true"
         />
 
-        <div className={styles.heroShell}>
-          <div className={styles.heroTop}>
+        <div className={styles.experienceHeroShell}>
+          <div className={styles.experienceHeroTop}>
             <CollaborationLockup />
 
             <div className={styles.tripState}>
@@ -95,118 +142,69 @@ export default async function CatchTripPage({
             </div>
           </div>
 
-          <div className={styles.heroGrid}>
-            <div className={styles.heroCopy}>
-              <p className={styles.kicker}>
-                Your catch /{" "}
-                {trip.publicTripCode}
-              </p>
+          <div className={styles.experienceHeroCenter}>
+            <p className={styles.scanEyebrow}>
+              YOU SCANNED YOUR CATCH
+            </p>
 
-              <h1>
-                Know exactly
-                <br />
-                where your
-                <br />
-                <em>scallops came from.</em>
-              </h1>
+            <h1>
+              These scallops
+              <br />
+              had a journey
+              <br />
+              <em>before they reached you.</em>
+            </h1>
 
-              <p className={styles.heroLead}>
-                This package is connected to one
-                documented fishing trip. Meet the
-                boat, see the journey, and follow
-                your scallops from the water to
-                your table.
-              </p>
+            <p className={styles.experienceHeroLead}>
+              This package is connected to one documented fishing trip.
+              Follow the boat, the people, the water, and the path from
+              New Bedford to your table.
+            </p>
 
-              <div className={styles.heroActions}>
-                <a
-                  className={styles.primaryButton}
-                  href="#passport"
-                >
-                  Open catch passport
-                </a>
+            <div className={styles.experienceHeroActions}>
+              <a
+                className={styles.primaryButton}
+                href="#voyage"
+              >
+                Start the journey
+                <span aria-hidden="true">↓</span>
+              </a>
 
-                <a
-                  className={styles.textLink}
-                  href="#trip-film"
-                >
-                  Watch the trip story
-                  <span>↓</span>
-                </a>
-              </div>
+              <CatchShareButton
+                title={`My catch · ${trip.publicTripCode}`}
+              />
+            </div>
+          </div>
+
+          <div className={styles.experienceHeroPassport}>
+            <div>
+              <span>YOUR CATCH</span>
+              <strong>{trip.product.name}</strong>
             </div>
 
-            <aside
-              className={styles.heroReceipt}
-              aria-label="Catch summary"
-            >
-              <div className={styles.receiptHeader}>
-                <span>Catch passport</span>
-                <span>
-                  {trip.demo
-                    ? "DEMO"
-                    : "VERIFIED"}
-                </span>
-              </div>
+            <div>
+              <span>VESSEL</span>
+              <strong>{trip.vessel.name}</strong>
+            </div>
 
-              <dl className={styles.receiptList}>
-                <div>
-                  <dt>Trip</dt>
-                  <dd>
-                    {trip.publicTripCode}
-                  </dd>
-                </div>
+            <div>
+              <span>LOT</span>
+              <strong>{trip.product.lotCode}</strong>
+            </div>
 
-                <div>
-                  <dt>Species</dt>
-                  <dd>
-                    {trip.product.species}
-                  </dd>
-                </div>
-
-                <div>
-                  <dt>Vessel</dt>
-                  <dd>
-                    {trip.vessel.name}
-                  </dd>
-                </div>
-
-                <div>
-                  <dt>Landed</dt>
-                  <dd>
-                    {trip.trip.landed}
-                  </dd>
-                </div>
-              </dl>
-
-              <div className={styles.receiptFooter}>
-                <span>
-                  Scan connected to lot
-                </span>
-
-                <strong>
-                  {trip.product.lotCode}
-                </strong>
-              </div>
-            </aside>
+            <div>
+              <span>TRIP</span>
+              <strong>{trip.publicTripCode}</strong>
+            </div>
           </div>
+        </div>
 
-          <div
-            className={styles.heroFoot}
-            aria-hidden="true"
-          >
-            <span>
-              OVER THE RAIL CO.
-            </span>
-            <i>×</i>
-            <span>
-              FLEET FISHERIES
-            </span>
-            <i>◆</i>
-            <span>
-              FROM TRIP TO TABLE
-            </span>
-          </div>
+        <div
+          className={styles.experienceScrollCue}
+          aria-hidden="true"
+        >
+          <span>FOLLOW THE TRIP</span>
+          <i />
         </div>
       </section>
 
@@ -216,176 +214,66 @@ export default async function CatchTripPage({
           aria-label="Prototype notice"
         >
           <div className={styles.shell}>
-            <strong>
-              Prototype trip record
-            </strong>
-
+            <strong>Prototype trip record</strong>
             <p>
-              The experience is production-ready,
-              but the vessel, captain, dates, and
-              lot information on this demo route
-              are placeholders. Replace the demo
-              record with verified Fleet Fisheries
-              trip data before using a QR code on
-              real seafood packaging.
+              This route demonstrates the finished customer experience.
+              Vessel, captain, dates, and lot details are placeholders until
+              verified Fleet Fisheries trip data is connected.
             </p>
           </div>
         </section>
       )}
 
       <section
-        className={styles.passport}
-        id="passport"
+        className={styles.emotionalReveal}
+        id="voyage"
       >
         <div className={styles.shell}>
-          <div className={styles.sectionIntro}>
-            <p className={styles.kicker}>
-              01 / Your catch passport
-            </p>
+          <div className={styles.revealLabelRow}>
+            <span>01 / THE VOYAGE</span>
+            <span>FROM SEA TO YOU</span>
+          </div>
 
+          <div className={styles.revealStatement}>
+            <p>Most seafood ends at a label.</p>
             <h2>
-              One package.
+              Yours opens a door
               <br />
-              One trip.
-              <br />
-              <em>One real story.</em>
+              <em>back to the ocean.</em>
             </h2>
-
-            <p>
-              Traceability becomes something you
-              can actually see and understand—not
-              a code buried on a label.
-            </p>
-          </div>
-
-          <div className={styles.identityGrid}>
-            <article
-              className={styles.productIdentity}
-            >
-              <div>
-                <span>
-                  What&apos;s in your package
-                </span>
-
-                <span>
-                  Lot {trip.product.lotCode}
-                </span>
-              </div>
-
-              <h3>
-                {trip.product.name}
-              </h3>
-
-              <p>
-                {trip.product.species}
-              </p>
-
-              <strong>
-                {trip.product.format}
-              </strong>
-            </article>
-
-            <div className={styles.factGrid}>
-              <Fact
-                number="01"
-                label="Vessel"
-                value={trip.vessel.name}
-              />
-
-              <Fact
-                number="02"
-                label="Captain"
-                value={trip.vessel.captain}
-              />
-
-              <Fact
-                number="03"
-                label="Home port"
-                value={trip.vessel.homePort}
-              />
-
-              <Fact
-                number="04"
-                label="Departed"
-                value={trip.trip.departed}
-              />
-
-              <Fact
-                number="05"
-                label="Landed"
-                value={trip.trip.landed}
-              />
-
-              <Fact
-                number="06"
-                label="Trip length"
-                value={trip.trip.duration}
-              />
-
-              <Fact
-                number="07"
-                label="Harvest area"
-                value={trip.trip.harvestArea}
-              />
-
-              <Fact
-                number="08"
-                label="Landed at"
-                value={trip.trip.landedAt}
-              />
-            </div>
-          </div>
-
-          <div className={styles.tripCodeStrip}>
-            <span>
-              DIGITAL CATCH PASSPORT
-            </span>
-
-            <strong>
-              {trip.publicTripCode}
-            </strong>
-
-            <span>
-              {trip.demo
-                ? "SAMPLE RECORD"
-                : "VERIFIED RECORD"}
-            </span>
           </div>
         </div>
+
+        <CatchVoyageExperience
+          chapters={chapters}
+        />
       </section>
 
-      <section className={styles.journey}>
+      <section className={styles.originSection}>
         <div className={styles.shell}>
-          <div className={styles.journeyHeader}>
+          <div className={styles.originHeader}>
             <div>
               <p className={styles.kicker}>
-                02 / Where they came from
+                02 / Place matters
               </p>
-
               <h2>
-                Follow the
+                See where the
                 <br />
-                journey offshore.
+                journey took place.
               </h2>
             </div>
 
             <p>
-              This view is intentionally broad.
-              Customers get meaningful origin
-              information without exposing exact
+              You get a real sense of origin without revealing exact
               commercial fishing coordinates.
             </p>
           </div>
 
-          <div className={styles.mapGrid}>
-            <div className={styles.mapPanel}>
+          <div className={styles.experienceMapGrid}>
+            <div className={styles.experienceMapPanel}>
               <div className={styles.mapMeta}>
-                <span>
-                  GENERAL HARVEST AREA
-                </span>
-                <span>
-                  NOT EXACT TOW COORDINATES
-                </span>
+                <span>GENERAL HARVEST AREA</span>
+                <span>EXACT TOW COORDINATES PROTECTED</span>
               </div>
 
               <svg
@@ -396,7 +284,7 @@ export default async function CatchTripPage({
               >
                 <defs>
                   <pattern
-                    id="ocean-grid"
+                    id="experience-ocean-grid"
                     width="45"
                     height="45"
                     patternUnits="userSpaceOnUse"
@@ -409,30 +297,12 @@ export default async function CatchTripPage({
                       strokeWidth="1"
                     />
                   </pattern>
-
-                  <filter
-                    id="route-glow"
-                    x="-20%"
-                    y="-20%"
-                    width="140%"
-                    height="140%"
-                  >
-                    <feGaussianBlur
-                      stdDeviation="3"
-                      result="blur"
-                    />
-
-                    <feMerge>
-                      <feMergeNode in="blur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
                 </defs>
 
                 <rect
                   width="900"
                   height="540"
-                  fill="url(#ocean-grid)"
+                  fill="url(#experience-ocean-grid)"
                 />
 
                 <path
@@ -441,10 +311,9 @@ export default async function CatchTripPage({
                 />
 
                 <path
-                  className={styles.routeLine}
+                  className={`${styles.routeLine} ${styles.routeLineAnimated}`}
                   d="M178 320C286 301 334 250 424 224C540 190 620 203 724 260C624 328 541 346 441 355C334 364 260 351 178 320Z"
                   fill="none"
-                  filter="url(#route-glow)"
                 />
 
                 <path
@@ -461,7 +330,7 @@ export default async function CatchTripPage({
                 />
 
                 <circle
-                  className={styles.harvestPulse}
+                  className={`${styles.harvestPulse} ${styles.harvestPulseAnimated}`}
                   cx="724"
                   cy="260"
                   r="30"
@@ -513,35 +382,25 @@ export default async function CatchTripPage({
               </div>
             </div>
 
-            <aside className={styles.mapDetails}>
-              <p className={styles.kicker}>
-                The documented area
-              </p>
+            <aside className={styles.experienceMapDetails}>
+              <p className={styles.kicker}>THE DOCUMENTED AREA</p>
 
-              <h3>
-                {trip.trip.harvestArea}
-              </h3>
+              <h3>{trip.trip.harvestArea}</h3>
 
               <dl>
                 <div>
-                  <dt>Departure</dt>
-                  <dd>
-                    {trip.map.departureLabel}
-                  </dd>
+                  <dt>Left from</dt>
+                  <dd>{trip.map.departureLabel}</dd>
                 </div>
 
                 <div>
-                  <dt>Harvest method</dt>
-                  <dd>
-                    {trip.trip.harvestMethod}
-                  </dd>
+                  <dt>Worked by</dt>
+                  <dd>{trip.vessel.name}</dd>
                 </div>
 
                 <div>
-                  <dt>Return</dt>
-                  <dd>
-                    {trip.map.returnLabel}
-                  </dd>
+                  <dt>Returned to</dt>
+                  <dd>{trip.map.returnLabel}</dd>
                 </div>
               </dl>
 
@@ -553,224 +412,225 @@ export default async function CatchTripPage({
         </div>
       </section>
 
-      <section className={styles.story}>
-        <div className={styles.shell}>
-          <div className={styles.storyGrid}>
-            <div className={styles.storyNumber}>
-              03
+      <section className={styles.peopleSection}>
+        <video
+          className={styles.peopleVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
+        >
+          <source
+            src={trip.media[1]?.src || "/about.mp4"}
+            type="video/mp4"
+          />
+        </video>
+
+        <div
+          className={styles.peopleOverlay}
+          aria-hidden="true"
+        />
+
+        <div className={`${styles.shell} ${styles.peopleGrid}`}>
+          <div className={styles.peopleCopy}>
+            <p className={styles.kicker}>
+              03 / The people behind it
+            </p>
+
+            <h2>{trip.story.title}</h2>
+
+            <p>{trip.story.body}</p>
+          </div>
+
+          <div className={styles.peoplePassport}>
+            <span className={styles.peoplePassportLabel}>
+              VESSEL PASSPORT
+            </span>
+
+            <div className={styles.peopleVesselName}>
+              {trip.vessel.name}
             </div>
 
-            <div className={styles.storyCopy}>
+            <dl>
+              <div>
+                <dt>Captain</dt>
+                <dd>{trip.vessel.captain}</dd>
+              </div>
+
+              <div>
+                <dt>Home port</dt>
+                <dd>{trip.vessel.homePort}</dd>
+              </div>
+
+              <div>
+                <dt>Trip length</dt>
+                <dd>{trip.trip.duration}</dd>
+              </div>
+            </dl>
+
+            <p>{trip.vessel.note}</p>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.proofSection}>
+        <div className={styles.shell}>
+          <div className={styles.proofHeader}>
+            <p className={styles.kicker}>
+              04 / The proof behind the story
+            </p>
+
+            <h2>
+              Now see the facts
+              <br />
+              tied to your package.
+            </h2>
+          </div>
+
+          <div className={styles.proofGrid}>
+            <article className={styles.proofProductCard}>
+              <div>
+                <span>WHAT&apos;S IN YOUR PACKAGE</span>
+                <span>LOT {trip.product.lotCode}</span>
+              </div>
+
+              <h3>{trip.product.name}</h3>
+              <p>{trip.product.species}</p>
+              <strong>{trip.product.format}</strong>
+            </article>
+
+            <Fact
+              number="01"
+              label="Vessel"
+              value={trip.vessel.name}
+            />
+            <Fact
+              number="02"
+              label="Captain"
+              value={trip.vessel.captain}
+            />
+            <Fact
+              number="03"
+              label="Departed"
+              value={trip.trip.departed}
+            />
+            <Fact
+              number="04"
+              label="Landed"
+              value={trip.trip.landed}
+            />
+            <Fact
+              number="05"
+              label="Harvest area"
+              value={trip.trip.harvestArea}
+            />
+            <Fact
+              number="06"
+              label="Trip code"
+              value={trip.publicTripCode}
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.chainSection}>
+        <div className={styles.shell}>
+          <div className={styles.chainHeader}>
+            <div>
               <p className={styles.kicker}>
-                {trip.story.eyebrow}
+                05 / From water to table
               </p>
 
               <h2>
-                {trip.story.title}
+                Follow every handoff
+                <br />
+                <em>that brought it to you.</em>
               </h2>
-
-              <p>
-                {trip.story.body}
-              </p>
             </div>
+
+            <span className={styles.chainCode}>
+              {trip.publicTripCode}
+            </span>
           </div>
 
-          <div className={styles.vesselCard}>
-            <div className={styles.vesselStamp}>
-              <span>
-                VESSEL
-              </span>
-              <strong>
-                {trip.vessel.name}
-              </strong>
-            </div>
-
-            <div className={styles.vesselDetails}>
-              <div>
-                <span>Captain</span>
-                <strong>
-                  {trip.vessel.captain}
-                </strong>
-              </div>
-
-              <div>
-                <span>Home port</span>
-                <strong>
-                  {trip.vessel.homePort}
-                </strong>
-              </div>
-            </div>
-
-            <p>
-              {trip.vessel.note}
-            </p>
+          <div className={styles.chainTrack}>
+            {trip.milestones.map((milestone) => (
+              <article key={milestone.step}>
+                <span>{milestone.step}</span>
+                <div className={styles.chainMarker} />
+                <h3>{milestone.title}</h3>
+                <p>{milestone.detail}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      <section
-        className={styles.filmSection}
-        id="trip-film"
-      >
-        <div className={styles.shell}>
-          <div className={styles.filmHeader}>
-            <p className={styles.kicker}>
-              04 / See the trip
-            </p>
+      <section className={styles.finalExperience}>
+        <video
+          className={styles.finalVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
+        >
+          <source
+            src={trip.media[3]?.src || "/contact.mp4"}
+            type="video/mp4"
+          />
+        </video>
 
-            <h2>
-              From the deck.
-              <br />
-              <em>Not from a stock library.</em>
-            </h2>
+        <div
+          className={styles.finalOverlay}
+          aria-hidden="true"
+        />
 
-            <p>
-              The media layer is designed so each
-              future trip can carry its own clips.
-              The prototype uses videos already
-              available on the Over The Rail site.
-            </p>
-          </div>
+        <div className={`${styles.shell} ${styles.finalExperienceInner}`}>
+          <CollaborationLockup large />
 
-          <div className={styles.filmGrid}>
-            {trip.media.map(
-              (item, index) => (
-                <article
-                  className={
-                    index === 0
-                      ? styles.filmCardLarge
-                      : styles.filmCard
-                  }
-                  key={`${item.src}-${item.title}`}
-                >
-                  <div className={styles.filmMedia}>
-                    <video
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      aria-label={item.title}
-                    >
-                      <source
-                        src={item.src}
-                        type="video/mp4"
-                      />
-                    </video>
+          <p className={styles.kicker}>
+            OVER THE RAIL CO. × FLEET FISHERIES
+          </p>
 
-                    <span
-                      className={styles.filmIndex}
-                    >
-                      {String(
-                        index + 1
-                      ).padStart(2, "0")}
-                    </span>
-                  </div>
+          <h2>
+            Your food came
+            <br />
+            from somewhere.
+            <br />
+            <em>Now you know where.</em>
+          </h2>
 
-                  <div className={styles.filmCopy}>
-                    <p className={styles.kicker}>
-                      {item.eyebrow}
-                    </p>
+          <p className={styles.finalLead}>
+            That connection is the point: real seafood, real people,
+            and a real trip behind the package in your hands.
+          </p>
 
-                    <h3>
-                      {item.title}
-                    </h3>
-
-                    <p>
-                      {item.caption}
-                    </p>
-                  </div>
-                </article>
-              )
-            )}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.timeline}>
-        <div className={styles.shell}>
-          <div className={styles.timelineHeader}>
-            <p className={styles.kicker}>
-              05 / From trip to table
-            </p>
-
-            <h2>
-              Follow the
-              <br />
-              chain of custody.
-            </h2>
-          </div>
-
-          <div className={styles.timelineList}>
-            {trip.milestones.map(
-              (milestone) => (
-                <article
-                  key={milestone.step}
-                >
-                  <span>
-                    {milestone.step}
-                  </span>
-
-                  <h3>
-                    {milestone.title}
-                  </h3>
-
-                  <p>
-                    {milestone.detail}
-                  </p>
-                </article>
-              )
-            )}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.collabSection}>
-        <div className={styles.shell}>
-          <div className={styles.collabGrid}>
-            <CollaborationLockup
-              large
+          <div className={styles.finalActions}>
+            <CatchShareButton
+              title={`My catch · ${trip.publicTripCode}`}
             />
 
-            <div className={styles.collabCopy}>
-              <p className={styles.kicker}>
-                A different kind of seafood experience
-              </p>
+            <Link
+              className={styles.textLink}
+              href="/catch"
+            >
+              Trace another catch
+              <span>→</span>
+            </Link>
+          </div>
 
-              <h2>
-                Know the trip.
-                <br />
-                Know the people.
-                <br />
-                <em>Know your food.</em>
-              </h2>
-
-              <p>
-                Over The Rail Co. and Fleet
-                Fisheries can use this digital
-                passport to make seafood provenance
-                personal—connecting the product in
-                the customer&apos;s hands to the
-                fishing trip behind it.
-              </p>
-
-              <div className={styles.collabActions}>
-                <Link
-                  className={styles.primaryButtonDark}
-                  href="/"
-                >
-                  Explore Over The Rail Co.
-                </Link>
-
-                <Link
-                  className={styles.textLinkDark}
-                  href="/catch"
-                >
-                  Trace another catch
-                  <span>→</span>
-                </Link>
-              </div>
-            </div>
+          <div className={styles.finalPassportStamp}>
+            <span>DIGITAL CATCH PASSPORT</span>
+            <strong>{trip.publicTripCode}</strong>
+            <span>
+              {trip.demo ? "SAMPLE RECORD" : "VERIFIED RECORD"}
+            </span>
           </div>
         </div>
       </section>
@@ -799,9 +659,7 @@ function CollaborationLockup({
         />
       </div>
 
-      <span className={styles.collabX}>
-        ×
-      </span>
+      <span className={styles.collabX}>×</span>
 
       <div className={styles.logoBoxLight}>
         <img
@@ -823,7 +681,7 @@ function Fact({
   value: string;
 }) {
   return (
-    <article className={styles.fact}>
+    <article className={styles.experienceFact}>
       <span>{number}</span>
 
       <div>

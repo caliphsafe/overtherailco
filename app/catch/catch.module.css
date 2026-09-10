@@ -1855,3 +1855,1270 @@
     display: none;
   }
 }
+
+/* =========================================
+   CATCH EXPERIENCE V2
+========================================= */
+
+.experienceHero {
+  min-height: calc(100svh - 114px);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--trace-black);
+  color: var(--trace-white);
+}
+
+.experienceHeroVideo,
+.peopleVideo,
+.finalVideo {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.experienceHeroOverlay,
+.peopleOverlay,
+.finalOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.experienceHeroOverlay {
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.7) 45%, rgba(0,0,0,.34) 75%, rgba(0,0,0,.62) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.14) 0%, rgba(0,0,0,.05) 45%, rgba(0,0,0,.86) 100%);
+}
+
+.experienceHeroShell {
+  width: min(calc(100% - (var(--trace-pad) * 2)), var(--trace-shell));
+  min-height: calc(100svh - 114px);
+  margin: 0 auto;
+  padding: 28px 0 38px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 28px;
+}
+
+.experienceHeroTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.experienceHeroCenter {
+  width: min(100%, 1120px);
+  align-self: center;
+  padding: 8vh 0 3vh;
+}
+
+.scanEyebrow {
+  margin: 0 0 22px;
+  color: rgba(255,255,255,.6);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.experienceHeroCenter h1 {
+  max-width: 1080px;
+  margin: 0;
+  font-family: var(--trace-serif);
+  font-size: clamp(68px, 8.4vw, 146px);
+  line-height: .8;
+  letter-spacing: -.078em;
+  font-weight: 400;
+}
+
+.experienceHeroCenter h1 em {
+  font-weight: 400;
+}
+
+.experienceHeroLead {
+  max-width: 690px;
+  margin: 34px 0 0;
+  color: rgba(255,255,255,.7);
+  font-size: clamp(15px, 1.25vw, 19px);
+  line-height: 1.72;
+}
+
+.experienceHeroActions {
+  margin-top: 34px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.experienceHeroActions .primaryButton {
+  gap: 18px;
+}
+
+.shareButton {
+  min-height: 52px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  border: 1px solid rgba(255,255,255,.38);
+  background: rgba(0,0,0,.22);
+  color: var(--trace-white);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.shareButton:hover {
+  background: var(--trace-white);
+  color: var(--trace-black);
+  border-color: var(--trace-white);
+}
+
+.experienceHeroPassport {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  border-top: 1px solid rgba(255,255,255,.28);
+  border-left: 1px solid rgba(255,255,255,.28);
+  background: rgba(0,0,0,.3);
+  backdrop-filter: blur(14px);
+}
+
+.experienceHeroPassport > div {
+  min-height: 84px;
+  padding: 17px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  border-right: 1px solid rgba(255,255,255,.28);
+  border-bottom: 1px solid rgba(255,255,255,.28);
+}
+
+.experienceHeroPassport span {
+  color: rgba(255,255,255,.43);
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.experienceHeroPassport strong {
+  font-family: var(--trace-serif);
+  font-size: clamp(16px, 1.7vw, 24px);
+  line-height: 1.05;
+  font-weight: 400;
+}
+
+.experienceScrollCue {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: rgba(255,255,255,.42);
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .15em;
+  writing-mode: vertical-rl;
+  text-transform: uppercase;
+  transform: translateY(-50%);
+}
+
+.experienceScrollCue i {
+  width: 1px;
+  height: 70px;
+  background: rgba(255,255,255,.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.experienceScrollCue i::after {
+  content: "";
+  position: absolute;
+  inset: -70px 0 auto;
+  height: 70px;
+  background: var(--trace-white);
+  animation: catchScrollLine 1.9s ease-in-out infinite;
+}
+
+@keyframes catchScrollLine {
+  0% { transform: translateY(0); }
+  70%, 100% { transform: translateY(140px); }
+}
+
+/* =========================================
+   EMOTIONAL REVEAL + SCROLL STORY
+========================================= */
+
+.emotionalReveal {
+  padding: clamp(95px, 11vw, 170px) 0 0;
+  background: var(--trace-paper);
+  color: var(--trace-black);
+}
+
+.revealLabelRow {
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid var(--trace-black);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.revealStatement {
+  padding: clamp(65px, 8vw, 120px) 0 clamp(75px, 9vw, 135px);
+  display: grid;
+  grid-template-columns: .45fr 1.55fr;
+  gap: clamp(40px, 7vw, 110px);
+  align-items: start;
+}
+
+.revealStatement > p {
+  margin: 12px 0 0;
+  color: var(--trace-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.revealStatement h2,
+.originHeader h2,
+.proofHeader h2,
+.chainHeader h2,
+.finalExperienceInner h2 {
+  margin: 0;
+  font-family: var(--trace-serif);
+  font-size: clamp(58px, 7vw, 116px);
+  line-height: .87;
+  letter-spacing: -.065em;
+  font-weight: 400;
+}
+
+.revealStatement h2 em,
+.chainHeader h2 em,
+.finalExperienceInner h2 em {
+  font-weight: 400;
+}
+
+.voyageExperience {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(360px, .8fr);
+  background: var(--trace-black);
+  color: var(--trace-white);
+}
+
+.voyageSticky {
+  height: calc(100svh - 84px);
+  position: sticky;
+  top: 84px;
+  overflow: hidden;
+  background: var(--trace-black);
+}
+
+.voyageVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: catchVideoFade .55s ease both;
+}
+
+@keyframes catchVideoFade {
+  from { opacity: .25; transform: scale(1.015); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.voyageShade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.08) 44%, rgba(0,0,0,.72) 100%),
+    linear-gradient(90deg, rgba(0,0,0,.2) 0%, rgba(0,0,0,0) 70%);
+}
+
+.voyageFrame {
+  position: absolute;
+  inset: 18px;
+  padding: 17px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(255,255,255,.26);
+  pointer-events: none;
+}
+
+.voyageFrameTop,
+.voyageFrameBottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: rgba(255,255,255,.62);
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.voyageFrameBottom {
+  align-items: end;
+}
+
+.voyageProgress {
+  display: flex;
+  gap: 7px;
+  pointer-events: auto;
+}
+
+.voyageProgress button {
+  width: 34px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.voyageProgress button span {
+  width: 100%;
+  height: 2px;
+  display: block;
+  background: rgba(255,255,255,.3);
+  transition: background .2s ease, transform .2s ease;
+}
+
+.voyageProgress button.isActive span {
+  background: var(--trace-white);
+  transform: scaleY(2);
+}
+
+.voyageCopyRail {
+  border-left: 1px solid rgba(255,255,255,.18);
+}
+
+.voyageChapter {
+  min-height: 78svh;
+  padding: clamp(58px, 7vw, 110px) clamp(28px, 4vw, 64px);
+  display: grid;
+  grid-template-columns: 65px 1fr;
+  gap: 28px;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,.16);
+  opacity: .32;
+  transition: opacity .35s ease;
+}
+
+.voyageChapter.isActive {
+  opacity: 1;
+}
+
+.voyageChapterNumber {
+  align-self: start;
+  color: rgba(255,255,255,.25);
+  font-family: var(--trace-serif);
+  font-size: 42px;
+  font-style: italic;
+  line-height: 1;
+}
+
+.voyageEyebrow {
+  margin: 0 0 22px;
+  color: rgba(255,255,255,.44);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.voyageChapter h3 {
+  max-width: 650px;
+  margin: 0;
+  font-family: var(--trace-serif);
+  font-size: clamp(42px, 4vw, 70px);
+  line-height: .92;
+  letter-spacing: -.05em;
+  font-weight: 400;
+}
+
+.voyageChapter > div:last-child > p:not(.voyageEyebrow) {
+  max-width: 570px;
+  margin: 30px 0 0;
+  color: rgba(255,255,255,.6);
+  font-size: 14px;
+  line-height: 1.72;
+}
+
+.voyageMetaMobile {
+  margin-top: 28px;
+  display: none;
+  color: rgba(255,255,255,.42);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+/* =========================================
+   ORIGIN MAP
+========================================= */
+
+.originSection {
+  padding: clamp(100px, 12vw, 185px) 0;
+  background: #090909;
+  color: var(--trace-white);
+}
+
+.originHeader {
+  display: grid;
+  grid-template-columns: 1fr .55fr;
+  gap: 70px;
+  align-items: end;
+}
+
+.originHeader > p {
+  max-width: 520px;
+  margin: 0 0 8px;
+  color: rgba(255,255,255,.55);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.experienceMapGrid {
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: minmax(0,1.55fr) minmax(300px,.45fr);
+  border: 1px solid rgba(255,255,255,.25);
+}
+
+.experienceMapPanel {
+  min-height: 610px;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid rgba(255,255,255,.25);
+  color: rgba(255,255,255,.75);
+}
+
+.experienceMapDetails {
+  padding: 34px;
+  display: flex;
+  flex-direction: column;
+}
+
+.experienceMapDetails h3 {
+  max-width: 420px;
+  margin: 0;
+  font-family: var(--trace-serif);
+  font-size: clamp(42px, 4vw, 66px);
+  line-height: .94;
+  letter-spacing: -.05em;
+  font-weight: 400;
+}
+
+.experienceMapDetails dl {
+  margin: 45px 0 0;
+  border-top: 1px solid rgba(255,255,255,.2);
+}
+
+.experienceMapDetails dl div {
+  padding: 18px 0;
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 15px;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+}
+
+.experienceMapDetails dt {
+  color: rgba(255,255,255,.4);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.experienceMapDetails dd {
+  margin: 0;
+  color: rgba(255,255,255,.85);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.routeLineAnimated {
+  stroke-dasharray: 9 9;
+  animation: catchRoute 10s linear infinite;
+}
+
+@keyframes catchRoute {
+  to { stroke-dashoffset: -180; }
+}
+
+.harvestPulseAnimated {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: catchPulse 2.3s ease-out infinite;
+}
+
+@keyframes catchPulse {
+  0% { opacity: .8; transform: scale(.4); }
+  85%, 100% { opacity: 0; transform: scale(1.8); }
+}
+
+/* =========================================
+   PEOPLE
+========================================= */
+
+.peopleSection {
+  min-height: 820px;
+  padding: clamp(100px, 12vw, 180px) 0;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--trace-black);
+  color: var(--trace-white);
+}
+
+.peopleOverlay {
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.62) 48%, rgba(0,0,0,.35) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,.76) 100%);
+}
+
+.peopleGrid {
+  min-height: 590px;
+  display: grid;
+  grid-template-columns: 1fr minmax(340px,.55fr);
+  gap: clamp(55px, 8vw, 120px);
+  align-items: end;
+}
+
+.peopleCopy {
+  max-width: 930px;
+}
+
+.peopleCopy h2 {
+  margin: 0;
+  font-family: var(--trace-serif);
+  font-size: clamp(58px, 6.6vw, 108px);
+  line-height: .88;
+  letter-spacing: -.065em;
+  font-weight: 400;
+}
+
+.peopleCopy > p:last-child {
+  max-width: 650px;
+  margin: 32px 0 0;
+  color: rgba(255,255,255,.65);
+  font-size: 16px;
+  line-height: 1.72;
+}
+
+.peoplePassport {
+  padding: 26px;
+  background: rgba(0,0,0,.52);
+  border: 1px solid rgba(255,255,255,.28);
+  backdrop-filter: blur(16px);
+}
+
+.peoplePassportLabel {
+  color: rgba(255,255,255,.44);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+.peopleVesselName {
+  margin: 34px 0 38px;
+  font-family: var(--trace-serif);
+  font-size: clamp(42px, 4vw, 64px);
+  line-height: .9;
+  letter-spacing: -.05em;
+}
+
+.peoplePassport dl {
+  margin: 0;
+  border-top: 1px solid rgba(255,255,255,.2);
+}
+
+.peoplePassport dl div {
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 22px;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+}
+
+.peoplePassport dt {
+  color: rgba(255,255,255,.42);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.peoplePassport dd {
+  margin: 0;
+  text-align: right;
+  font-size: 11px;
+}
+
+.peoplePassport > p {
+  margin: 30px 0 0;
+  color: rgba(255,255,255,.52);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+/* =========================================
+   PROOF / PASSPORT
+========================================= */
+
+.proofSection {
+  padding: clamp(95px, 11vw, 170px) 0;
+  background: var(--trace-white);
+}
+
+.proofHeader {
+  max-width: 1000px;
+  margin-bottom: 65px;
+}
+
+.proofGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  border-top: 1px solid var(--trace-black);
+  border-left: 1px solid var(--trace-black);
+}
+
+.proofProductCard,
+.experienceFact {
+  min-height: 245px;
+  padding: 24px;
+  border-right: 1px solid var(--trace-black);
+  border-bottom: 1px solid var(--trace-black);
+}
+
+.proofProductCard {
+  grid-column: span 2;
+  min-height: 310px;
+  display: flex;
+  flex-direction: column;
+  background: var(--trace-black);
+  color: var(--trace-white);
+}
+
+.proofProductCard > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: rgba(255,255,255,.45);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.proofProductCard h3 {
+  margin: auto 0 0;
+  font-family: var(--trace-serif);
+  font-size: clamp(56px, 5vw, 86px);
+  line-height: .87;
+  letter-spacing: -.06em;
+  font-weight: 400;
+}
+
+.proofProductCard p {
+  margin: 14px 0 0;
+  color: rgba(255,255,255,.62);
+  font-size: 13px;
+}
+
+.proofProductCard strong {
+  margin-top: 24px;
+  color: rgba(255,255,255,.4);
+  font-size: 8px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.experienceFact {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--trace-white);
+}
+
+.experienceFact > span {
+  color: #aaa;
+  font-family: var(--trace-serif);
+  font-size: 30px;
+  font-style: italic;
+}
+
+.experienceFact div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.experienceFact small {
+  color: var(--trace-muted);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.experienceFact strong {
+  font-family: var(--trace-serif);
+  font-size: clamp(22px, 2vw, 31px);
+  line-height: 1.06;
+  font-weight: 400;
+}
+
+/* =========================================
+   CHAIN OF CUSTODY
+========================================= */
+
+.chainSection {
+  padding: clamp(95px, 11vw, 170px) 0;
+  background: var(--trace-paper);
+}
+
+.chainHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+  align-items: end;
+}
+
+.chainCode {
+  padding-bottom: 8px;
+  color: var(--trace-muted);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.chainTrack {
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0,1fr));
+  position: relative;
+}
+
+.chainTrack::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 43px;
+  height: 1px;
+  background: var(--trace-black);
+}
+
+.chainTrack article {
+  min-width: 0;
+  padding-right: clamp(18px, 2.5vw, 42px);
+  position: relative;
+}
+
+.chainTrack article > span {
+  color: var(--trace-muted);
+  font-family: var(--trace-serif);
+  font-size: 25px;
+  font-style: italic;
+}
+
+.chainMarker {
+  width: 13px;
+  height: 13px;
+  margin: 21px 0 34px;
+  position: relative;
+  z-index: 2;
+  border: 3px solid var(--trace-paper);
+  border-radius: 50%;
+  background: var(--trace-black);
+  box-shadow: 0 0 0 1px var(--trace-black);
+}
+
+.chainTrack h3 {
+  max-width: 220px;
+  margin: 0;
+  font-family: var(--trace-serif);
+  font-size: clamp(26px, 2.4vw, 38px);
+  line-height: .98;
+  font-weight: 400;
+}
+
+.chainTrack p {
+  max-width: 235px;
+  margin: 19px 0 0;
+  color: var(--trace-muted);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+/* =========================================
+   FINAL EXPERIENCE
+========================================= */
+
+.finalExperience {
+  min-height: 92svh;
+  padding: clamp(100px, 11vw, 170px) 0 55px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--trace-black);
+  color: var(--trace-white);
+}
+
+.finalOverlay {
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.6) 52%, rgba(0,0,0,.4) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.16) 0%, rgba(0,0,0,.72) 100%);
+}
+
+.finalExperienceInner {
+  min-height: calc(92svh - 225px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.finalExperienceInner > .collaborationLockup {
+  margin-bottom: 70px;
+}
+
+.finalExperienceInner h2 {
+  max-width: 1060px;
+  color: var(--trace-white);
+}
+
+.finalLead {
+  max-width: 650px;
+  margin: 32px 0 0;
+  color: rgba(255,255,255,.66);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.finalActions {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.finalPassportStamp {
+  width: 100%;
+  margin-top: 70px;
+  padding-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 25px;
+  border-top: 1px solid rgba(255,255,255,.32);
+  color: rgba(255,255,255,.5);
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.finalPassportStamp strong {
+  color: var(--trace-white);
+  font-size: 9px;
+}
+
+.finalPassportStamp span:last-child {
+  text-align: right;
+}
+
+/* =========================================
+   EXPERIENCE RESPONSIVE
+========================================= */
+
+@media (max-width: 1100px) {
+  .experienceHeroPassport {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+
+  .voyageExperience {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .proofGrid {
+    grid-template-columns: repeat(3, minmax(0,1fr));
+  }
+
+  .proofProductCard {
+    grid-column: span 2;
+  }
+
+  .chainTrack {
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 54px 24px;
+  }
+
+  .chainTrack::before {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .experienceHero {
+    min-height: calc(100svh - 98px);
+  }
+
+  .experienceHeroShell {
+    min-height: calc(100svh - 98px);
+  }
+
+  .experienceHeroCenter h1 {
+    font-size: clamp(64px, 14vw, 105px);
+  }
+
+  .experienceScrollCue {
+    display: none;
+  }
+
+  .revealStatement,
+  .originHeader,
+  .peopleGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .voyageExperience {
+    display: block;
+  }
+
+  .voyageSticky {
+    height: 56svh;
+    top: 72px;
+    z-index: 2;
+  }
+
+  .voyageCopyRail {
+    border-left: 0;
+  }
+
+  .voyageChapter {
+    min-height: 58svh;
+  }
+
+  .voyageMetaMobile {
+    display: block;
+  }
+
+  .voyageFrameBottom > span:first-child {
+    display: none;
+  }
+
+  .experienceMapGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .experienceMapPanel {
+    min-height: 480px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,.25);
+  }
+
+  .peopleGrid {
+    min-height: 680px;
+    align-items: end;
+  }
+
+  .peoplePassport {
+    max-width: 560px;
+  }
+
+  .proofGrid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+
+  .proofProductCard {
+    grid-column: 1 / -1;
+  }
+
+  .chainHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .chainTrack {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .experienceHeroShell {
+    width: calc(100% - 36px);
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .experienceHeroTop {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .experienceHeroTop .tripState {
+    align-self: flex-start;
+  }
+
+  .experienceHeroVideo {
+    object-position: 58% center;
+  }
+
+  .experienceHeroOverlay {
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.58) 45%, rgba(0,0,0,.9) 100%);
+  }
+
+  .experienceHeroCenter {
+    padding: 5vh 0 3vh;
+  }
+
+  .scanEyebrow {
+    margin-bottom: 17px;
+    font-size: 8px;
+  }
+
+  .experienceHeroCenter h1 {
+    font-size: clamp(58px, 18vw, 82px);
+  }
+
+  .experienceHeroLead {
+    margin-top: 25px;
+    font-size: 14px;
+  }
+
+  .experienceHeroActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .experienceHeroActions .primaryButton,
+  .experienceHeroActions .shareButton {
+    width: 100%;
+  }
+
+  .experienceHeroPassport {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+
+  .experienceHeroPassport > div {
+    min-height: 72px;
+    padding: 13px;
+  }
+
+  .experienceHeroPassport strong {
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+
+  .revealLabelRow {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .revealStatement {
+    padding-top: 52px;
+    padding-bottom: 70px;
+    gap: 28px;
+  }
+
+  .revealStatement h2,
+  .originHeader h2,
+  .proofHeader h2,
+  .chainHeader h2,
+  .finalExperienceInner h2 {
+    font-size: clamp(52px, 15vw, 74px);
+  }
+
+  .voyageSticky {
+    height: 48svh;
+  }
+
+  .voyageFrame {
+    inset: 10px;
+    padding: 11px;
+  }
+
+  .voyageProgress button {
+    width: 24px;
+  }
+
+  .voyageChapter {
+    min-height: 54svh;
+    padding: 58px 18px;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+  }
+
+  .voyageChapterNumber {
+    font-size: 30px;
+  }
+
+  .voyageChapter h3 {
+    font-size: 45px;
+  }
+
+  .experienceMapGrid {
+    margin-top: 45px;
+  }
+
+  .experienceMapPanel {
+    min-height: 380px;
+  }
+
+  .tripMap {
+    min-height: 380px;
+  }
+
+  .mapMeta {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .experienceMapDetails {
+    padding: 24px 20px;
+  }
+
+  .peopleSection {
+    min-height: 760px;
+    padding: 90px 0 70px;
+  }
+
+  .peopleVideo {
+    object-position: 60% center;
+  }
+
+  .peopleGrid {
+    min-height: 600px;
+  }
+
+  .peopleCopy h2 {
+    font-size: 58px;
+  }
+
+  .proofGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .proofProductCard {
+    min-height: 280px;
+  }
+
+  .proofProductCard,
+  .experienceFact {
+    grid-column: auto;
+  }
+
+  .experienceFact {
+    min-height: 185px;
+  }
+
+  .chainTrack {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .chainTrack article {
+    min-height: 180px;
+    padding: 0 0 38px 42px;
+    border-left: 1px solid var(--trace-black);
+  }
+
+  .chainTrack article:last-child {
+    border-left-color: transparent;
+  }
+
+  .chainTrack article > span {
+    position: absolute;
+    left: 12px;
+    top: -5px;
+    font-size: 20px;
+  }
+
+  .chainMarker {
+    position: absolute;
+    left: -7px;
+    top: 0;
+    margin: 0;
+  }
+
+  .chainTrack h3 {
+    font-size: 34px;
+  }
+
+  .finalExperience {
+    min-height: 88svh;
+  }
+
+  .finalExperienceInner {
+    min-height: calc(88svh - 200px);
+  }
+
+  .finalExperienceInner > .collaborationLockup {
+    margin-bottom: 55px;
+  }
+
+  .finalActions {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .finalActions .shareButton {
+    width: 100%;
+  }
+
+  .finalPassportStamp {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .finalPassportStamp strong,
+  .finalPassportStamp span:last-child {
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experienceHeroVideo,
+  .voyageVideo,
+  .peopleVideo,
+  .finalVideo {
+    display: none;
+  }
+
+  .experienceScrollCue i::after,
+  .routeLineAnimated,
+  .harvestPulseAnimated {
+    animation: none !important;
+  }
+
+  .voyageChapter {
+    opacity: 1;
+  }
+}
