@@ -541,352 +541,188 @@
 }
 
 /* =========================================
-   CINEMATIC VOYAGE
+   JOURNEY — NATIVE CINEMATIC CHAPTERS
 ========================================= */
 
-.voyageExperience {
-  height: 420vh;
-
+.voyageStory {
   position: relative;
-
   background: var(--deep);
 }
 
-.voyageCanvas {
-  height: 100svh;
-
-  position: sticky;
-  top: 0;
-
-  overflow: hidden;
-
-  background: var(--navy);
-}
-
-.voyageVideoStack {
-  position: absolute;
-  inset: 0;
-
-  overflow: hidden;
-
-  background: var(--deep);
-}
-
-.voyageVideoLayer {
-  width: 100%;
-  height: 100%;
-
-  position: absolute;
-  inset: 0;
-
-  object-fit: cover;
-
-  opacity: 0;
-  transform: scale(1.015);
-
-  transition:
-    opacity 0.52s ease,
-    transform 1.1s ease;
-
-  pointer-events: none;
-}
-
-.voyageVideoLayer.isActive {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.voyageShade {
-  position: absolute;
-  inset: 0;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(2, 23, 34, 0.72) 0%,
-      rgba(2, 23, 34, 0.34) 48%,
-      rgba(2, 23, 34, 0.08) 76%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(2, 23, 34, 0.12),
-      rgba(2, 23, 34, 0.06) 43%,
-      rgba(2, 23, 34, 0.88)
-    );
-
-  pointer-events: none;
-}
-
-.voyageActiveCopy {
-  width: min(
-    calc(100% - (var(--pad) * 2) - 185px),
-    1180px
-  );
-
-  position: absolute;
-  left: var(--pad);
-  top: 50%;
-  z-index: 3;
-
-  transform: translateY(-52%);
-
-  pointer-events: none;
-}
-
-.voyageActiveCopy > p {
-  margin: 0 0 16px;
-
-  color: var(--orange-soft);
-
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-}
-
-.voyageActiveCopy h3 {
-  max-width: 920px;
-
-  margin: 0;
-
-  color: var(--white);
-
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(66px, 8.3vw, 142px);
-  line-height: 0.82;
-  letter-spacing: -0.065em;
-  font-weight: 400;
-
-  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-}
-
-.voyageActiveCopy > span {
-  margin-top: 26px;
-
-  display: inline-block;
-
-  color: rgba(255, 255, 255, 0.66);
-
-  font-size: 9px;
-  font-weight: 900;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
-
-.voyageMomentCopy {
-  max-width: 520px;
-
-  position: absolute;
-  left: var(--pad);
-  bottom: 36px;
-  z-index: 4;
-
-  padding-top: 15px;
-
-  border-top: 1px solid rgba(255, 255, 255, 0.28);
-
-  pointer-events: none;
-}
-
-.voyageMomentCopy span {
-  display: block;
-
-  color: var(--sky);
-
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-}
-
-.voyageMomentCopy p {
-  margin: 10px 0 0;
-
-  color: rgba(255, 255, 255, 0.6);
-
-  font-size: 13px;
-  line-height: 1.65;
-}
-
-/* Vertical voyage guide — intentionally the same orientation
-   on desktop and mobile so the interaction never changes. */
-
-.voyageVerticalGuide {
-  width: 145px;
-
-  position: absolute;
-  top: 9vh;
-  right: clamp(20px, 3.5vw, 58px);
-  bottom: 9vh;
-  z-index: 5;
-
-  color: var(--white);
-
-  pointer-events: none;
-}
-
-.voyageGuideLine {
+.voyageSpine {
   width: 1px;
-
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 16px;
-
-  background: rgba(255, 255, 255, 0.24);
-}
-
-.voyageGuideFill {
-  width: 2px;
-
-  position: absolute;
-  left: -0.5px;
-  top: 0;
-
-  background:
-    linear-gradient(
-      180deg,
-      var(--orange),
-      var(--orange-soft)
-    );
-
-  box-shadow: 0 0 18px rgba(244, 123, 32, 0.34);
-}
-
-.voyageBoatMarker {
-  width: 34px;
-  height: 34px;
-
-  position: absolute;
-  left: 0;
-
-  transform: translate(-50%, -50%);
-
-  display: grid;
-  place-items: center;
-
-  border: 1px solid rgba(255, 255, 255, 0.44);
-  border-radius: 50%;
-
-  background: var(--orange);
-  color: var(--deep);
-
-  box-shadow:
-    0 0 0 5px rgba(2, 23, 34, 0.5),
-    0 8px 28px rgba(0, 0, 0, 0.28);
-
-  transition: top 0.08s linear;
-}
-
-.voyageBoatMarker svg {
-  width: 22px;
-  height: 22px;
-}
-
-.voyageGuideArrow {
-  position: absolute;
-  left: 0;
-  bottom: -30px;
-
-  transform: translateX(-50%);
-
-  color: var(--orange-soft);
-
-  font-size: 17px;
-  line-height: 1;
-
-  animation: voyageArrow 1.5s ease-in-out infinite;
-}
-
-.voyageGuideStations {
-  position: absolute;
-  inset: 0 0 0 0;
-}
-
-.voyageGuideStation {
-  min-width: 120px;
-
-  position: absolute;
-  left: 0;
-
-  transform: translateY(-50%);
-
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  color: rgba(255, 255, 255, 0.37);
-
-  font-size: 7px;
-  font-weight: 900;
-  letter-spacing: 0.13em;
-
-  transition:
-    color 0.25s ease,
-    opacity 0.25s ease;
-}
-
-.voyageGuideStation i {
-  width: 9px;
-  height: 9px;
-
-  flex: 0 0 9px;
-
-  transform: translateX(12px);
-
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: 50%;
-
-  background: var(--deep);
-}
-
-.voyageGuideStation b {
-  margin-left: 13px;
-
-  font: inherit;
-}
-
-.voyageGuideStation.isPassed {
-  color: rgba(131, 215, 227, 0.65);
-}
-
-.voyageGuideStation.isPassed i {
-  background: var(--sky);
-  border-color: var(--sky);
-}
-
-.voyageGuideStation.isActive {
-  color: var(--white);
-}
-
-.voyageGuideStation.isActive i {
-  background: var(--orange);
-  border-color: var(--orange);
-
-  box-shadow: 0 0 0 5px rgba(244, 123, 32, 0.14);
-}
-
-.voyageScrollRail {
-  position: absolute;
-  inset: 0;
-
+  left: clamp(34px, 5.3vw, 86px);
+  z-index: 7;
+  background: linear-gradient(180deg, rgba(131, 215, 227, 0.12), rgba(131, 215, 227, 0.72) 8%, rgba(131, 215, 227, 0.72) 92%, rgba(131, 215, 227, 0.12));
   pointer-events: none;
 }
 
-.voyageScrollMoment {
-  height: 105vh;
+.voyageScene {
+  min-height: 100svh;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: var(--deep);
 }
 
-@keyframes voyageArrow {
-  0%,
-  100% {
-    transform: translate(-50%, 0);
-    opacity: 0.45;
-  }
+.voyageScene + .voyageScene {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-  50% {
-    transform: translate(-50%, 7px);
-    opacity: 1;
-  }
+.voyageSceneVideo {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  object-fit: cover;
+  transform: scale(1.002);
+  pointer-events: none;
+}
+
+.voyageSceneShade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(90deg, rgba(2, 23, 34, 0.87) 0%, rgba(2, 23, 34, 0.63) 43%, rgba(2, 23, 34, 0.22) 72%, rgba(2, 23, 34, 0.12) 100%), linear-gradient(180deg, rgba(2, 23, 34, 0.14) 0%, rgba(2, 23, 34, 0.05) 47%, rgba(2, 23, 34, 0.82) 100%);
+}
+
+.voyageScene:nth-child(even) .voyageSceneShade {
+  background: linear-gradient(270deg, rgba(2, 23, 34, 0.84) 0%, rgba(2, 23, 34, 0.53) 42%, rgba(2, 23, 34, 0.16) 76%, rgba(2, 23, 34, 0.08) 100%), linear-gradient(180deg, rgba(2, 23, 34, 0.14) 0%, rgba(2, 23, 34, 0.05) 47%, rgba(2, 23, 34, 0.82) 100%);
+}
+
+.voyageSceneInner {
+  width: min(calc(100% - (var(--pad) * 2)), var(--shell));
+  margin: 0 auto;
+  padding: clamp(110px, 12vw, 185px) 0 clamp(100px, 10vw, 150px) clamp(90px, 8vw, 140px);
+  position: relative;
+  z-index: 3;
+}
+
+.voyageWaypoint {
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  left: calc(clamp(34px, 5.3vw, 86px) - var(--pad));
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.44);
+  border-radius: 50%;
+  background: rgba(2, 23, 34, 0.82);
+  box-shadow: 0 0 0 7px rgba(2, 23, 34, 0.42), 0 0 32px rgba(21, 153, 197, 0.16);
+  backdrop-filter: blur(8px);
+}
+
+.voyageWaypoint span {
+  width: 10px;
+  height: 10px;
+  display: block;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 18px rgba(244, 123, 32, 0.42);
+}
+
+.voyageSceneCopy {
+  max-width: 900px;
+}
+
+.voyageScene:nth-child(even) .voyageSceneCopy {
+  margin-left: auto;
+  text-align: right;
+}
+
+.voyageSceneMeta {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  flex-wrap: wrap;
+  color: var(--orange-soft);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.voyageScene:nth-child(even) .voyageSceneMeta {
+  justify-content: flex-end;
+}
+
+.voyageSceneMeta i {
+  width: 24px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.38);
+}
+
+.voyageSceneCopy h3 {
+  max-width: 900px;
+  margin: 18px 0 0;
+  color: var(--white);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(70px, 8.6vw, 146px);
+  line-height: 0.8;
+  letter-spacing: -0.068em;
+  font-weight: 400;
+  text-wrap: balance;
+  text-shadow: 0 12px 45px rgba(0, 0, 0, 0.3);
+}
+
+.voyageScene:nth-child(even) .voyageSceneCopy h3 {
+  margin-left: auto;
+}
+
+.voyageSceneCopy > p {
+  max-width: 560px;
+  margin: 30px 0 0;
+  color: rgba(255, 255, 255, 0.69);
+  font-size: clamp(15px, 1.35vw, 19px);
+  line-height: 1.72;
+}
+
+.voyageScene:nth-child(even) .voyageSceneCopy > p {
+  margin-left: auto;
+}
+
+.voyageSceneCopy > strong {
+  margin-top: 28px;
+  display: inline-block;
+  color: var(--sky);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.voyageContinue {
+  width: 34px;
+  height: 52px;
+  position: absolute;
+  left: clamp(34px, 5.3vw, 86px);
+  bottom: 18px;
+  z-index: 8;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: var(--orange-soft);
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.voyageContinue span {
+  animation: voyageContinue 1.6s ease-in-out infinite;
+}
+
+@keyframes voyageContinue {
+  0%, 100% { transform: translateY(0); opacity: 0.45; }
+  50% { transform: translateY(8px); opacity: 1; }
 }
 
 /* =========================================
@@ -1761,94 +1597,73 @@
     font-size: 15px;
   }
 
-  .voyageExperience {
-    height: 390vh;
-  }
-
-  .voyageActiveCopy {
-    width: calc(100% - 92px);
-
-    left: 18px;
-    top: 42%;
-  }
-
-  .voyageActiveCopy h3 {
-    font-size: clamp(52px, 15vw, 78px);
-  }
-
-  .voyageActiveCopy > span {
-    max-width: calc(100% - 20px);
-
-    font-size: 7px;
-    line-height: 1.5;
-  }
-
-  .voyageMomentCopy {
-    max-width: calc(100% - 92px);
-
-    left: 18px;
-    bottom: 27px;
-  }
-
-  .voyageMomentCopy p {
-    font-size: 12px;
-  }
-
-  .voyageVerticalGuide {
-    width: 60px;
-
-    top: 8vh;
-    right: 8px;
-    bottom: 8vh;
-  }
-
-  .voyageGuideLine {
+  .voyageSpine {
     left: 30px;
   }
 
-  .voyageGuideStation {
-    min-width: 46px;
-
-    left: 14px;
+  .voyageScene {
+    min-height: 92svh;
+    align-items: flex-end;
   }
 
-  .voyageGuideStation i {
-    transform: translateX(12px);
+  .voyageSceneShade,
+  .voyageScene:nth-child(even) .voyageSceneShade {
+    background: linear-gradient(180deg, rgba(2, 23, 34, 0.08) 0%, rgba(2, 23, 34, 0.18) 36%, rgba(2, 23, 34, 0.92) 83%, rgba(2, 23, 34, 0.98) 100%), linear-gradient(90deg, rgba(2, 23, 34, 0.28), transparent 70%);
   }
 
-  .voyageGuideStation b {
-    display: none;
+  .voyageSceneInner {
+    width: 100%;
+    padding: 110px 18px 92px 62px;
   }
 
-  .voyageGuideStation.isActive b {
-    max-width: 58px;
+  .voyageWaypoint {
+    width: 28px;
+    height: 28px;
+    left: 12px;
+    top: auto;
+    bottom: 117px;
+    transform: translate(-50%, 0);
+  }
 
-    position: absolute;
-    right: 36px;
+  .voyageWaypoint span {
+    width: 8px;
+    height: 8px;
+  }
 
-    display: block;
-
+  .voyageSceneCopy,
+  .voyageScene:nth-child(even) .voyageSceneCopy {
+    max-width: 100%;
     margin: 0;
-    padding: 5px 7px;
+    text-align: left;
+  }
 
-    background: rgba(2, 23, 34, 0.7);
-
-    color: var(--white);
-
+  .voyageSceneMeta,
+  .voyageScene:nth-child(even) .voyageSceneMeta {
+    justify-content: flex-start;
     font-size: 7px;
-    letter-spacing: 0.09em;
-
-    backdrop-filter: blur(8px);
+    letter-spacing: 0.11em;
   }
 
-  .voyageBoatMarker {
-    width: 30px;
-    height: 30px;
+  .voyageSceneCopy h3,
+  .voyageScene:nth-child(even) .voyageSceneCopy h3 {
+    margin-left: 0;
+    font-size: clamp(54px, 16vw, 82px);
   }
 
-  .voyageBoatMarker svg {
-    width: 19px;
-    height: 19px;
+  .voyageSceneCopy > p,
+  .voyageScene:nth-child(even) .voyageSceneCopy > p {
+    max-width: 100%;
+    margin-left: 0;
+    font-size: 14px;
+  }
+
+  .voyageSceneCopy > strong {
+    font-size: 7px;
+  }
+
+  .voyageContinue {
+    left: 30px;
+    bottom: 16px;
   }
 
   .chartPanel {
@@ -2010,17 +1825,12 @@
 
 @media (prefers-reduced-motion: reduce) {
   .fullVideo,
-  .voyageVideoLayer {
+  .voyageSceneVideo {
     display: none;
   }
 
   .harvestPulse,
-  .voyageGuideArrow {
+  .voyageContinue span {
     animation: none;
-  }
-
-  .voyageVideoLayer,
-  .voyageBoatMarker {
-    transition: none;
   }
 }
