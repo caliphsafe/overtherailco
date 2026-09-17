@@ -65,7 +65,7 @@ const catchTrips: Record<string, CatchTrip> = {
     publicTripCode: "VP-0907-NB",
     demo: true,
     demoNote:
-      "Sample voyage · F/V Viking Power vessel and captain details are real Fleet Fisheries information. Voyage dates, lot, weather, and harvest region are illustrative.",
+      "Sample voyage · F/V Viking Power vessel and captain details are real Fleet Fisheries information. Voyage dates, lot, weather, harvest region, and crew tales are illustrative.",
 
     product: {
       name: "Atlantic Sea Scallops",

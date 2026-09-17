@@ -57,7 +57,20 @@ export default async function CatchTripPage({
       body:
         "F/V Viking Power clears the harbor in the dark. The city falls behind and a six-day scallop trip begins.",
       meta: "NEW BEDFORD HARBOR",
-      video: trip.media[0]?.src || "/hero.mp4",
+      background: {
+        type: "video" as const,
+        src: trip.media[0]?.src || "/hero.mp4",
+      },
+      tale: {
+        image:
+          "/catch/trips/vp-0907-nb/tales/harbor.jpg",
+        imageAlt:
+          "Crew preparing for departure in New Bedford before sunrise",
+        quote:
+          "You can feel the trip start before we clear the barrier. Once the lines are off, everybody settles into the work.",
+        credit: "Deck crew · F/V Viking Power",
+        caption: "Before sunrise · New Bedford",
+      },
     },
     {
       label: "OFFSHORE",
@@ -66,7 +79,20 @@ export default async function CatchTripPage({
       body:
         "Watches, tows, hauling gear, sorting scallops, icing the catch — the steady rhythm of work offshore.",
       meta: trip.trip.weather,
-      video: trip.media[1]?.src || "/about.mp4",
+      background: {
+        type: "video" as const,
+        src: trip.media[1]?.src || "/about.mp4",
+      },
+      tale: {
+        image:
+          "/catch/trips/vp-0907-nb/tales/offshore.jpg",
+        imageAlt:
+          "Crew member working on deck offshore in the North Atlantic",
+        quote:
+          "Once the shoreline is gone, the weather and the gear set the pace. You stop thinking in hours and start thinking in tows.",
+        credit: "Deck crew · F/V Viking Power",
+        caption: "Offshore watch · North Atlantic",
+      },
     },
     {
       label: "GROUNDS",
@@ -75,7 +101,20 @@ export default async function CatchTripPage({
       body:
         "For this sample voyage, the route reaches the Georges Bank region, where the catch comes aboard and the journey turns toward home.",
       meta: trip.trip.harvestArea,
-      video: trip.media[2]?.src || "/shop.mp4",
+      background: {
+        type: "video" as const,
+        src: trip.media[2]?.src || "/shop.mp4",
+      },
+      tale: {
+        image:
+          "/catch/trips/vp-0907-nb/tales/grounds.jpg",
+        imageAlt:
+          "Crew sorting the catch on the scallop grounds",
+        quote:
+          "A good tow has a feel to it. You learn to read the deck, the catch, and the water together.",
+        credit: "Deck crew · F/V Viking Power",
+        caption: "Scallop grounds · Georges Bank",
+      },
     },
     {
       label: "HOME",
@@ -84,7 +123,20 @@ export default async function CatchTripPage({
       body:
         "Viking Power comes back through New Bedford with the catch cold and the trip complete. From here, Fleet Fisheries takes the handoff ashore.",
       meta: trip.trip.landedAt,
-      video: trip.media[3]?.src || "/contact.mp4",
+      background: {
+        type: "video" as const,
+        src: trip.media[3]?.src || "/contact.mp4",
+      },
+      tale: {
+        image:
+          "/catch/trips/vp-0907-nb/tales/home.jpg",
+        imageAlt:
+          "Crew returning to New Bedford after the fishing trip",
+        quote:
+          "Coming through the harbor is when the trip finally catches up with you. Then you see what the whole crew brought home.",
+        credit: "Deck crew · F/V Viking Power",
+        caption: "Return · New Bedford Harbor",
+      },
     },
   ];
 
