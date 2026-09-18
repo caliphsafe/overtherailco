@@ -2235,6 +2235,885 @@
   }
 }
 
+
+/* =========================================
+   MOBILE EXPERIENCE V10
+   Dedicated phone composition.
+   Desktop/tablet styles above remain unchanged.
+========================================= */
+
+@media (max-width: 640px) {
+  .page {
+    --pad: 18px;
+  }
+
+  /* -----------------------------
+     HERO — ONE CINEMATIC SCREEN
+  ----------------------------- */
+
+  .tripHero,
+  .lookupHero {
+    min-height: 100svh;
+  }
+
+  .tripHeroWash,
+  .lookupWash {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(2, 23, 34, 0.18) 0%,
+        rgba(2, 23, 34, 0.34) 34%,
+        rgba(2, 23, 34, 0.88) 76%,
+        rgba(2, 23, 34, 0.98) 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(2, 23, 34, 0.7),
+        rgba(2, 23, 34, 0.08) 78%
+      );
+  }
+
+  .marineTopbar {
+    width: calc(100% - 36px);
+
+    padding: 14px 0;
+
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+
+    font-size: 7px;
+    letter-spacing: 0.13em;
+  }
+
+  .tripHeroGrid,
+  .lookupHeroGrid {
+    width: 100%;
+    min-height: 100svh;
+
+    margin: 0;
+    padding:
+      96px
+      18px
+      calc(128px + env(safe-area-inset-bottom));
+
+    display: block;
+
+    position: relative;
+  }
+
+  .tripHeroCopy,
+  .lookupContent {
+    max-width: 92%;
+
+    padding: 0;
+
+    position: relative;
+    z-index: 4;
+  }
+
+  .tripHeroCopy h1,
+  .lookupContent h1 {
+    max-width: 96%;
+
+    margin-top: 13px;
+
+    font-size: clamp(58px, 17.2vw, 82px);
+    line-height: 0.82;
+    letter-spacing: -0.067em;
+  }
+
+  .tripHeroLead,
+  .lookupLead {
+    max-width: 90%;
+
+    margin-top: 24px;
+
+    font-size: 14px;
+    line-height: 1.62;
+  }
+
+  .tripHeroActions {
+    width: min(100%, 330px);
+
+    margin-top: 27px;
+
+    align-items: stretch;
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .diveButton,
+  .shareButton {
+    min-height: 50px;
+
+    width: 100%;
+
+    padding-inline: 17px;
+  }
+
+  /* The package identity floats on the video rather than becoming
+     a second stacked hero panel. */
+
+  .heroBrandStage {
+    width: min(49vw, 205px);
+    min-height: 0;
+    aspect-ratio: 1;
+
+    position: absolute;
+    right: 12px;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    z-index: 3;
+
+    padding: 20px 10px;
+
+    border: 0;
+
+    background:
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(21, 153, 197, 0.18),
+        rgba(2, 23, 34, 0.1) 64%,
+        transparent 72%
+      );
+  }
+
+  .heroBrandStage::before {
+    width: 82%;
+
+    border-color: rgba(131, 215, 227, 0.2);
+
+    box-shadow:
+      0 0 0 22px rgba(131, 215, 227, 0.025),
+      0 0 0 44px rgba(131, 215, 227, 0.014);
+  }
+
+  .heroBrandStage .collabLogo {
+    width: 100%;
+    max-height: 115px;
+
+    filter:
+      drop-shadow(0 11px 26px rgba(0, 0, 0, 0.34));
+  }
+
+  .heroBrandCoordinate {
+    top: 7px;
+    left: 8px;
+    right: 8px;
+
+    text-align: center;
+
+    font-size: 5.5px;
+    letter-spacing: 0.08em;
+  }
+
+  .heroBrandCaption {
+    left: 8px;
+    right: 8px;
+    bottom: 5px;
+
+    display: block;
+
+    text-align: center;
+
+    font-size: 5.2px;
+    line-height: 1.35;
+    letter-spacing: 0.05em;
+  }
+
+  .heroBrandCaption span:last-child {
+    display: none;
+  }
+
+  .heroFactLine {
+    display: none;
+  }
+
+  /* Lookup input feels like a native premium control rather than
+     a desktop form stacked on mobile. */
+
+  .lookupForm {
+    margin-top: 28px;
+  }
+
+  .lookupForm > div {
+    grid-template-columns: 1fr auto;
+
+    align-items: center;
+  }
+
+  .lookupForm input {
+    height: 52px;
+
+    font-size: 12px;
+  }
+
+  .lookupForm button {
+    min-height: 52px;
+
+    padding-left: 15px;
+
+    justify-self: auto;
+
+    white-space: nowrap;
+  }
+
+  .sampleVoyageLink {
+    max-width: 78%;
+
+    margin-top: 20px;
+
+    font-size: 9px;
+    line-height: 1.5;
+  }
+
+  /* -----------------------------
+     JOURNEY INTRO
+  ----------------------------- */
+
+  .journeyPrelude {
+    min-height: 82svh;
+
+    padding:
+      92px
+      20px
+      100px;
+
+    align-items: center;
+  }
+
+  .journeyPrelude::after {
+    right: -0.15em;
+    bottom: 0;
+
+    font-size: 48vw;
+  }
+
+  .journeyPrelude h2 {
+    max-width: 96%;
+
+    font-size: clamp(57px, 16.7vw, 80px);
+    line-height: 0.83;
+  }
+
+  .journeyPreludeInner > p:last-child {
+    max-width: 88%;
+
+    margin: 30px 0 0 auto;
+
+    font-size: 14px;
+    line-height: 1.68;
+  }
+
+  /* -----------------------------
+     JOURNEY CHAPTERS
+     The background owns the top of the screen.
+     The story settles into the image, then the
+     Fisherman's Tale overlaps the chapter exit.
+  ----------------------------- */
+
+  .voyageSpine {
+    left: 24px;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(131, 215, 227, 0.12),
+        rgba(131, 215, 227, 0.6) 7%,
+        rgba(131, 215, 227, 0.6) 93%,
+        rgba(131, 215, 227, 0.12)
+      );
+  }
+
+  .voyageScene {
+    min-height: 132svh;
+
+    display: block;
+
+    background:
+      linear-gradient(
+        180deg,
+        var(--deep),
+        #031d2b
+      );
+  }
+
+  .voyageSceneVideo {
+    height: 82svh;
+
+    top: 0;
+    bottom: auto;
+
+    transform: scale(1.02);
+
+    object-position: center;
+  }
+
+  .voyageSceneShade,
+  .voyageScene:nth-of-type(even) .voyageSceneShade {
+    height: 82svh;
+    bottom: auto;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(2, 23, 34, 0.06) 0%,
+        rgba(2, 23, 34, 0.16) 34%,
+        rgba(2, 23, 34, 0.55) 61%,
+        rgba(2, 23, 34, 0.97) 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(2, 23, 34, 0.2),
+        transparent 72%
+      );
+  }
+
+  .voyageSceneInner {
+    width: 100%;
+
+    margin: 0;
+    padding:
+      53svh
+      18px
+      118px
+      50px;
+  }
+
+  .voyageWaypoint {
+    width: 28px;
+    height: 28px;
+
+    left: 24px;
+    top: 62svh;
+
+    transform: translate(-50%, -50%);
+
+    background: rgba(2, 23, 34, 0.86);
+
+    box-shadow:
+      0 0 0 6px rgba(2, 23, 34, 0.5),
+      0 0 24px rgba(244, 123, 32, 0.17);
+  }
+
+  .voyageWaypoint span {
+    width: 8px;
+    height: 8px;
+  }
+
+  .voyageSceneLayout,
+  .voyageScene:nth-of-type(even) .voyageSceneLayout {
+    display: block;
+  }
+
+  .voyageSceneCopy,
+  .voyageScene:nth-of-type(even) .voyageSceneCopy {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    position: relative;
+    z-index: 4;
+
+    text-align: left;
+  }
+
+  .voyageSceneMeta,
+  .voyageScene:nth-of-type(even) .voyageSceneMeta {
+    justify-content: flex-start;
+
+    font-size: 6.5px;
+    letter-spacing: 0.11em;
+  }
+
+  .voyageSceneCopy h3,
+  .voyageScene:nth-of-type(even) .voyageSceneCopy h3 {
+    max-width: 94%;
+
+    margin: 13px 0 0;
+
+    font-size: clamp(48px, 13.8vw, 70px);
+    line-height: 0.86;
+    letter-spacing: -0.055em;
+  }
+
+  .voyageSceneCopy > p,
+  .voyageScene:nth-of-type(even) .voyageSceneCopy > p {
+    max-width: 92%;
+
+    margin: 21px 0 0;
+
+    font-size: 13px;
+    line-height: 1.63;
+  }
+
+  .voyageSceneCopy > strong {
+    margin-top: 18px;
+
+    font-size: 6.5px;
+    letter-spacing: 0.11em;
+  }
+
+  /* Crew portrait becomes the visual punctuation between chapters. */
+
+  .fishermansTale,
+  .voyageScene:nth-of-type(even) .fishermansTale {
+    width: min(calc(100vw - 68px), 360px);
+
+    margin:
+      clamp(48px, 8vh, 74px)
+      0
+      0;
+
+    position: relative;
+    z-index: 5;
+
+    align-self: auto;
+  }
+
+  .voyageScene:nth-of-type(odd) .fishermansTale {
+    margin-left: auto;
+    margin-right: -7px;
+  }
+
+  .voyageScene:nth-of-type(even) .fishermansTale {
+    margin-left: -14px;
+    margin-right: auto;
+  }
+
+  .marinePortraitFrame {
+    padding: 28px 22px 26px;
+
+    border-color: rgba(131, 215, 227, 0.66);
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(3, 32, 48, 0.86),
+        rgba(2, 23, 34, 0.5)
+      );
+
+    box-shadow:
+      0 30px 78px rgba(0, 0, 0, 0.38),
+      inset 0 0 0 4px rgba(131, 215, 227, 0.035);
+  }
+
+  .voyageScene:nth-of-type(odd) .marinePortraitFrame {
+    transform: rotate(0.75deg);
+  }
+
+  .voyageScene:nth-of-type(even) .marinePortraitFrame {
+    transform: rotate(-0.75deg);
+  }
+
+  .marinePortraitFrame::before,
+  .marinePortraitFrame::after {
+    width: 28px;
+    height: 28px;
+  }
+
+  .marineFrameTop,
+  .marineFrameBottom {
+    left: 22px;
+    right: 22px;
+
+    font-size: 5.6px;
+    letter-spacing: 0.09em;
+  }
+
+  .marineFrameSideLeft,
+  .marineFrameSideRight {
+    font-size: 5.2px;
+    letter-spacing: 0.13em;
+  }
+
+  .fishermansTaleImageWrap {
+    aspect-ratio: 4 / 5;
+  }
+
+  .fishermansTaleImageWrap::before {
+    inset: 6px;
+  }
+
+  .marineFrameTicks {
+    opacity: 0.88;
+  }
+
+  .fishermansTaleCopy {
+    max-width: 95%;
+
+    margin-top: 22px;
+  }
+
+  .fishermansTaleLabel {
+    font-size: 7px;
+  }
+
+  .fishermansTale blockquote {
+    margin-top: 11px;
+
+    font-size: clamp(27px, 8.2vw, 36px);
+    line-height: 1.04;
+  }
+
+  .fishermansTaleCredit {
+    margin-top: 17px;
+  }
+
+  .voyageContinue {
+    left: 24px;
+    bottom: 18px;
+
+    height: 42px;
+  }
+
+  /* -----------------------------
+     MAP — READABLE, NOT CROPPED
+  ----------------------------- */
+
+  .chartSection {
+    min-height: auto;
+  }
+
+  .chartPanel {
+    min-height: 110svh;
+  }
+
+  .chartGrid {
+    background-size: 34px 34px;
+  }
+
+  .mapStory {
+    max-width: none;
+
+    left: 18px;
+    right: 18px;
+    top: 74px;
+
+    transform: none;
+  }
+
+  .mapStory h2 {
+    max-width: 92%;
+
+    font-size: clamp(52px, 14.7vw, 72px);
+    line-height: 0.86;
+  }
+
+  .mapStory > p:last-child {
+    max-width: 78%;
+
+    margin-top: 21px;
+
+    font-size: 12.5px;
+  }
+
+  .tripMap {
+    width: 680px;
+    height: 505px;
+
+    left: 50%;
+    right: auto;
+    top: 62%;
+
+    transform: translate(-52%, -50%);
+
+    opacity: 0.8;
+  }
+
+  .chartCompass {
+    top: 26px;
+    right: 20px;
+  }
+
+  .mapMeta {
+    left: 18px;
+    right: 18px;
+    bottom: 23px;
+
+    gap: 9px;
+
+    font-size: 6.5px;
+    line-height: 1.45;
+  }
+
+  .mapMeta i {
+    width: 12px;
+  }
+
+  /* -----------------------------
+     CATCH REVEAL
+  ----------------------------- */
+
+  .catchReveal {
+    min-height: 100svh;
+
+    padding:
+      104px
+      20px
+      110px;
+
+    align-items: center;
+  }
+
+  .catchReveal h2 {
+    max-width: 98%;
+
+    font-size: clamp(65px, 19vw, 95px);
+    line-height: 0.8;
+  }
+
+  .catchRevealLead {
+    max-width: 86%;
+
+    margin: 34px 0 0 auto;
+
+    font-size: 15px;
+    line-height: 1.68;
+  }
+
+  .catchHalo {
+    width: 390px;
+
+    right: -250px;
+    top: 42%;
+
+    opacity: 0.55;
+  }
+
+  /* -----------------------------
+     VESSEL — FULL-SCREEN MOMENT
+  ----------------------------- */
+
+  .vesselStory {
+    min-height: 100svh;
+
+    align-items: flex-end;
+  }
+
+  .vesselStoryInner {
+    width: 100%;
+
+    padding:
+      110px
+      20px
+      calc(44px + env(safe-area-inset-bottom));
+  }
+
+  .vesselStory h2 {
+    max-width: 98%;
+
+    font-size: clamp(65px, 19vw, 96px);
+    line-height: 0.82;
+  }
+
+  .vesselStoryLead {
+    max-width: 88%;
+
+    margin-top: 24px;
+
+    font-size: 14px;
+    line-height: 1.62;
+  }
+
+  .vesselSpecLine {
+    margin-top: 38px;
+    padding-top: 15px;
+
+    gap: 9px 12px;
+
+    font-size: 6.5px;
+    line-height: 1.45;
+  }
+
+  /* -----------------------------
+     SHORE STORY
+  ----------------------------- */
+
+  .shoreStory {
+    padding:
+      100px
+      20px
+      110px;
+  }
+
+  .shoreStoryIntro h2 {
+    max-width: 98%;
+
+    font-size: clamp(57px, 16.3vw, 82px);
+    line-height: 0.84;
+  }
+
+  .shoreStoryIntro > p:last-child {
+    max-width: 88%;
+
+    margin: 30px 0 0 auto;
+
+    font-size: 14px;
+  }
+
+  .shoreFlow {
+    margin-top: 62px;
+  }
+
+  .shoreFlow article,
+  .shoreFlow article:nth-child(even) {
+    min-height: 0;
+
+    margin-left: 0;
+    padding: 48px 0;
+  }
+
+  .shoreFlow article:nth-child(even) {
+    padding-left: 28px;
+  }
+
+  .shoreFlow h3 {
+    max-width: 95%;
+
+    font-size: 42px;
+  }
+
+  .shoreFlow p {
+    max-width: 90%;
+
+    font-size: 13px;
+  }
+
+  /* -----------------------------
+     PROVENANCE — OPEN, ONE COLUMN
+  ----------------------------- */
+
+  .provenanceSection {
+    min-height: 100svh;
+
+    padding:
+      100px
+      20px
+      105px;
+  }
+
+  .provenanceInner h2 {
+    font-size: clamp(61px, 17vw, 86px);
+  }
+
+  .provenanceIntro {
+    max-width: 88%;
+
+    margin-top: 29px;
+
+    font-size: 15px;
+  }
+
+  .provenanceFacts {
+    margin-top: 50px;
+
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .provenanceFacts > div {
+    padding: 17px 0;
+  }
+
+  .provenanceFacts dd {
+    margin-top: 7px;
+
+    font-size: 28px;
+  }
+
+  .provenanceActions {
+    margin-top: 34px;
+
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .provenanceActions .shareButton {
+    width: 100%;
+  }
+
+  .catchTextLink {
+    width: fit-content;
+
+    margin-top: 4px;
+  }
+
+  /* -----------------------------
+     FINALE
+  ----------------------------- */
+
+  .collabFinale {
+    min-height: 100svh;
+  }
+
+  .finaleInner {
+    padding:
+      76px
+      0
+      calc(38px + env(safe-area-inset-bottom));
+  }
+
+  .finaleInner .collabMark {
+    margin-bottom: 34px;
+  }
+
+  .finaleInner .collabLogo {
+    width: min(76vw, 330px);
+  }
+
+  .collabFinale h2 {
+    font-size: clamp(62px, 17.8vw, 90px);
+    line-height: 0.82;
+  }
+
+  .finaleFooter {
+    margin-top: 44px;
+
+    align-items: center;
+    flex-direction: column;
+
+    gap: 7px;
+
+    font-size: 6.5px;
+  }
+}
+
+/* Small phones: keep the same visual system without text collisions. */
+@media (max-width: 380px) {
+  .tripHeroCopy h1,
+  .lookupContent h1 {
+    font-size: 56px;
+  }
+
+  .heroBrandStage {
+    width: 46vw;
+  }
+
+  .voyageSceneInner {
+    padding-left: 46px;
+  }
+
+  .voyageSceneCopy h3,
+  .voyageScene:nth-of-type(even) .voyageSceneCopy h3 {
+    font-size: 47px;
+  }
+
+  .fishermansTale,
+  .voyageScene:nth-of-type(even) .fishermansTale {
+    width: calc(100vw - 62px);
+  }
+
+  .fishermansTale blockquote {
+    font-size: 27px;
+  }
+
+  .mapStory h2 {
+    font-size: 50px;
+  }
+}
+
+
 /* =========================================
    REDUCED MOTION
 ========================================= */
