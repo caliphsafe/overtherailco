@@ -200,16 +200,6 @@ export default async function CatchTripPage({
               <span>New Bedford · Massachusetts</span>
             </div>
           </div>
-        </div>
-
-        <div className={styles.heroFactLine}>
-          <span>{trip.vessel.name}</span>
-          <i />
-          <span>Captain {trip.vessel.captain}</span>
-          <i />
-          <span>{trip.trip.duration} at sea</span>
-          <i />
-          <span>{trip.trip.harvestArea}</span>
 
           <div className={styles.tripHeroCopy}>
 <p className={styles.oceanKicker}>
@@ -240,6 +230,16 @@ export default async function CatchTripPage({
               />
             </div>
           </div>
+        </div>
+
+        <div className={styles.heroFactLine}>
+          <span>{trip.vessel.name}</span>
+          <i />
+          <span>Captain {trip.vessel.captain}</span>
+          <i />
+          <span>{trip.trip.duration} at sea</span>
+          <i />
+          <span>{trip.trip.harvestArea}</span>
         </div>
       </section>
 
