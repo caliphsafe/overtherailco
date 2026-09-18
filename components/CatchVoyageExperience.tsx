@@ -18,6 +18,12 @@ type FishermansTale = {
   quote: string;
   credit: string;
   caption: string;
+  frame: {
+    latitude: string;
+    longitude: string;
+    waters: string;
+    vessel: string;
+  };
 };
 
 type VoyageChapter = {
@@ -46,10 +52,7 @@ export default function CatchVoyageExperience({
       className={styles.voyageStory}
       aria-label="Fishing voyage"
     >
-      <div
-        className={styles.voyageSpine}
-        aria-hidden="true"
-      />
+      <div className={styles.voyageSpine} aria-hidden="true" />
 
       {chapters.map((chapter, index) => (
         <article
@@ -68,10 +71,7 @@ export default function CatchVoyageExperience({
               aria-hidden="true"
               tabIndex={-1}
             >
-              <source
-                src={chapter.background.src}
-                type="video/mp4"
-              />
+              <source src={chapter.background.src} type="video/mp4" />
             </video>
           ) : (
             <img
@@ -83,16 +83,10 @@ export default function CatchVoyageExperience({
             />
           )}
 
-          <div
-            className={styles.voyageSceneShade}
-            aria-hidden="true"
-          />
+          <div className={styles.voyageSceneShade} aria-hidden="true" />
 
           <div className={styles.voyageSceneInner}>
-            <div
-              className={styles.voyageWaypoint}
-              aria-hidden="true"
-            >
+            <div className={styles.voyageWaypoint} aria-hidden="true">
               <span />
             </div>
 
@@ -110,20 +104,51 @@ export default function CatchVoyageExperience({
               </div>
 
               <figure className={styles.fishermansTale}>
-                <div className={styles.fishermansTaleImageWrap}>
-                  <img
-                    className={styles.fishermansTaleImage}
-                    src={chapter.tale.image}
-                    alt={chapter.tale.imageAlt}
-                    loading={index === 0 ? "eager" : "lazy"}
-                    decoding="async"
-                  />
+                <div className={styles.marinePortraitFrame}>
+                  <div className={styles.marineFrameTop}>
+                    <span>LAT {chapter.tale.frame.latitude}</span>
+                    <span>LON {chapter.tale.frame.longitude}</span>
+                  </div>
+
+                  <div className={styles.fishermansTaleImageWrap}>
+                    <img
+                      className={styles.fishermansTaleImage}
+                      src={chapter.tale.image}
+                      alt={chapter.tale.imageAlt}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+
+                    <span
+                      className={styles.fishermansTaleImageIndex}
+                      aria-hidden="true"
+                    >
+                      {chapter.label}
+                    </span>
+
+                    <div
+                      className={styles.marineFrameTicks}
+                      aria-hidden="true"
+                    />
+                  </div>
+
+                  <div className={styles.marineFrameBottom}>
+                    <span>{chapter.tale.frame.waters}</span>
+                    <span>{chapter.tale.frame.vessel}</span>
+                  </div>
 
                   <span
-                    className={styles.fishermansTaleImageIndex}
+                    className={styles.marineFrameSideLeft}
                     aria-hidden="true"
                   >
-                    {chapter.label}
+                    NORTH ATLANTIC
+                  </span>
+
+                  <span
+                    className={styles.marineFrameSideRight}
+                    aria-hidden="true"
+                  >
+                    SEA · SHORE · TABLE
                   </span>
                 </div>
 
@@ -132,9 +157,7 @@ export default function CatchVoyageExperience({
                     Fisherman&apos;s Tale
                   </span>
 
-                  <blockquote>
-                    “{chapter.tale.quote}”
-                  </blockquote>
+                  <blockquote>“{chapter.tale.quote}”</blockquote>
 
                   <div className={styles.fishermansTaleCredit}>
                     <strong>{chapter.tale.credit}</strong>
@@ -146,10 +169,7 @@ export default function CatchVoyageExperience({
           </div>
 
           {index < chapters.length - 1 && (
-            <div
-              className={styles.voyageContinue}
-              aria-hidden="true"
-            >
+            <div className={styles.voyageContinue} aria-hidden="true">
               <span>↓</span>
             </div>
           )}

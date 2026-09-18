@@ -70,6 +70,12 @@ export default async function CatchTripPage({
           "You can feel the trip start before we clear the barrier. Once the lines are off, everybody settles into the work.",
         credit: "Deck crew · F/V Viking Power",
         caption: "Before sunrise · New Bedford",
+        frame: {
+          latitude: "41.6362° N",
+          longitude: "70.9342° W",
+          waters: "NEW BEDFORD HARBOR",
+          vessel: `${trip.vessel.name} · ${trip.publicTripCode}`,
+        },
       },
     },
     {
@@ -92,6 +98,12 @@ export default async function CatchTripPage({
           "Once the shoreline is gone, the weather and the gear set the pace. You stop thinking in hours and start thinking in tows.",
         credit: "Deck crew · F/V Viking Power",
         caption: "Offshore watch · North Atlantic",
+        frame: {
+          latitude: "40–41° N",
+          longitude: "68–70° W",
+          waters: "OFFSHORE · NORTH ATLANTIC",
+          vessel: `${trip.vessel.name} · ${trip.publicTripCode}`,
+        },
       },
     },
     {
@@ -99,7 +111,7 @@ export default async function CatchTripPage({
       time: "SEP 03–06 · GEORGES BANK",
       title: "Cold water. Open sea. The scallop grounds.",
       body:
-        "For this sample voyage, the route reaches the Georges Bank region, where the catch comes aboard and the journey turns toward home.",
+        "On the Georges Bank grounds, the crew works the gear and brings Atlantic sea scallops aboard, sorting and icing the catch for the ride home.",
       meta: trip.trip.harvestArea,
       background: {
         type: "video" as const,
@@ -114,6 +126,12 @@ export default async function CatchTripPage({
           "A good tow has a feel to it. You learn to read the deck, the catch, and the water together.",
         credit: "Deck crew · F/V Viking Power",
         caption: "Scallop grounds · Georges Bank",
+        frame: {
+          latitude: "40–42° N",
+          longitude: "66–69° W",
+          waters: "GEORGES BANK · NORTH ATLANTIC",
+          vessel: `${trip.vessel.name} · ${trip.publicTripCode}`,
+        },
       },
     },
     {
@@ -136,6 +154,12 @@ export default async function CatchTripPage({
           "Coming through the harbor is when the trip finally catches up with you. Then you see what the whole crew brought home.",
         credit: "Deck crew · F/V Viking Power",
         caption: "Return · New Bedford Harbor",
+        frame: {
+          latitude: "41.6362° N",
+          longitude: "70.9342° W",
+          waters: "NEW BEDFORD HARBOR",
+          vessel: `${trip.vessel.name} · ${trip.publicTripCode}`,
+        },
       },
     },
   ];
@@ -165,11 +189,7 @@ export default async function CatchTripPage({
 
         <div className={styles.tripHeroGrid}>
           <div className={styles.tripHeroCopy}>
-            {trip.demo && trip.demoNote && (
-              <div className={styles.sampleFlag}>{trip.demoNote}</div>
-            )}
-
-            <p className={styles.oceanKicker}>
+<p className={styles.oceanKicker}>
               {trip.product.name} · {trip.vessel.homePort}
             </p>
 
@@ -182,9 +202,9 @@ export default async function CatchTripPage({
             </h1>
 
             <p className={styles.tripHeroLead}>
-              Caught aboard {trip.vessel.name}. Worked offshore in the North
-              Atlantic. Landed in New Bedford. A catch with a place, a boat,
-              and people behind it.
+              {trip.vessel.name} left New Bedford for the North Atlantic,
+              where Captain {trip.vessel.captain} and crew harvested this
+              catch before bringing it home through the harbor.
             </p>
 
             <div className={styles.tripHeroActions}>
@@ -228,17 +248,17 @@ export default async function CatchTripPage({
           <p className={styles.sectionTag}>THE VOYAGE</p>
 
           <h2>
-            Your scallops
+            Before the table,
             <br />
-            traveled farther
+            there was
             <br />
-            <em>than you did today.</em>
+            <em>the voyage.</em>
           </h2>
 
           <p>
-            They left New Bedford before sunrise, crossed into the North
-            Atlantic, came aboard on the scallop grounds, and returned through
-            the same harbor days later.
+            {trip.vessel.name} left New Bedford before sunrise, worked the
+            North Atlantic scallop grounds, and returned days later with the
+            catch aboard.
           </p>
         </div>
       </section>
@@ -253,7 +273,7 @@ export default async function CatchTripPage({
             className={styles.tripMap}
             viewBox="0 0 900 640"
             role="img"
-            aria-label={`Sample route from ${trip.map.departureLabel} toward ${trip.map.harvestAreaLabel} and back`}
+            aria-label={`Route from ${trip.map.departureLabel} toward ${trip.map.harvestAreaLabel} and back`}
           >
             <path
               className={styles.coastMass}
@@ -311,9 +331,9 @@ export default async function CatchTripPage({
             </h2>
 
             <p>
-              The exact tow is part of the working knowledge of the boat.
-              What you see here is the broader harvest region connected to
-              this sample catch.
+              From New Bedford, the voyage runs east into the North Atlantic
+              toward the Georges Bank scallop grounds, then turns home with
+              the catch aboard.
             </p>
           </div>
 
@@ -338,9 +358,9 @@ export default async function CatchTripPage({
           </h2>
 
           <p className={styles.catchRevealLead}>
-            Not anonymous. Not separated from the story that brought them
-            ashore. This box traces back to {trip.vessel.name}, Captain{" "}
-            {trip.vessel.captain}, and New Bedford.
+            This box traces back to {trip.vessel.name}, Captain{" "}
+            {trip.vessel.captain}, the North Atlantic, and the working
+            waterfront of New Bedford.
           </p>
 
           <div className={styles.catchHalo} aria-hidden="true">
@@ -403,8 +423,8 @@ export default async function CatchTripPage({
           </h2>
 
           <p>
-            From landing through refrigerated handling, the catch keeps its
-            identity as it moves from vessel to shore and toward your door.
+            Once the catch reaches New Bedford, refrigerated handling carries
+            the work forward from vessel to shore and on toward your door.
           </p>
         </div>
 
@@ -426,8 +446,8 @@ export default async function CatchTripPage({
           <h2>{trip.product.name}</h2>
 
           <p className={styles.provenanceIntro}>
-            {trip.product.pack}. Landed in New Bedford and connected back to
-            the vessel that brought it home.
+            {trip.product.pack}. Landed in New Bedford with its vessel,
+            captain, harvest region, and lot identity carried with it.
           </p>
 
           <dl className={styles.provenanceFacts}>

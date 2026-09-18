@@ -15,9 +15,6 @@ export type CatchTripMilestone = {
 export type CatchTrip = {
   slug: string;
   publicTripCode: string;
-  demo: boolean;
-  demoNote?: string;
-
   product: {
     name: string;
     species: string;
@@ -63,10 +60,6 @@ const catchTrips: Record<string, CatchTrip> = {
   [DEMO_CATCH_TRIP_ID]: {
     slug: DEMO_CATCH_TRIP_ID,
     publicTripCode: "VP-0907-NB",
-    demo: true,
-    demoNote:
-      "Sample voyage · F/V Viking Power vessel and captain details are real Fleet Fisheries information. Voyage dates, lot, weather, harvest region, and crew tales are illustrative.",
-
     product: {
       name: "Atlantic Sea Scallops",
       species: "Atlantic Sea Scallop",

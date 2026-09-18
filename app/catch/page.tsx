@@ -62,7 +62,7 @@ export default async function CatchLandingPage({
             </h1>
 
             <p className={styles.lookupLead}>
-              The vessel, the trip, the working waterfront, and the route
+              The vessel, the crew, the working waterfront, and the waters
               behind the scallops in your hands.
             </p>
 
@@ -89,7 +89,7 @@ export default async function CatchLandingPage({
               className={styles.sampleVoyageLink}
               href={`/catch/${DEMO_CATCH_TRIP_ID}`}
             >
-              Explore the F/V Viking Power sample voyage
+              Explore the F/V Viking Power voyage
               <b aria-hidden="true">→</b>
             </Link>
           </div>

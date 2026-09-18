@@ -209,19 +209,6 @@
   line-height: 1.7;
 }
 
-.sampleFlag {
-  max-width: 680px;
-
-  margin-bottom: 22px;
-  padding-left: 13px;
-
-  border-left: 2px solid var(--orange);
-
-  color: rgba(255, 255, 255, 0.55);
-
-  font-size: 9px;
-  line-height: 1.55;
-}
 
 .tripHeroActions {
   margin-top: 34px;
@@ -763,41 +750,215 @@
   justify-self: start;
 }
 
+.marinePortraitFrame {
+  position: relative;
+
+  padding: 30px 26px 28px;
+
+  border: 1px solid rgba(131, 215, 227, 0.55);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(3, 32, 48, 0.58),
+      rgba(2, 23, 34, 0.28)
+    );
+
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 5px rgba(131, 215, 227, 0.035);
+
+  backdrop-filter: blur(7px);
+}
+
+.marinePortraitFrame::before,
+.marinePortraitFrame::after {
+  content: "";
+
+  position: absolute;
+
+  width: 34px;
+  height: 34px;
+
+  pointer-events: none;
+}
+
+.marinePortraitFrame::before {
+  left: -7px;
+  top: -7px;
+
+  border-left: 2px solid var(--orange);
+  border-top: 2px solid var(--orange);
+}
+
+.marinePortraitFrame::after {
+  right: -7px;
+  bottom: -7px;
+
+  border-right: 2px solid var(--orange);
+  border-bottom: 2px solid var(--orange);
+}
+
+.marineFrameTop,
+.marineFrameBottom {
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  z-index: 4;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  font-size: 6.5px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.marineFrameTop {
+  top: 11px;
+
+  color: rgba(208, 241, 246, 0.76);
+}
+
+.marineFrameBottom {
+  bottom: 10px;
+
+  color: rgba(208, 241, 246, 0.56);
+}
+
+.marineFrameSideLeft,
+.marineFrameSideRight {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+
+  color: rgba(131, 215, 227, 0.5);
+
+  font-size: 6px;
+  font-weight: 900;
+  letter-spacing: 0.19em;
+  white-space: nowrap;
+
+  writing-mode: vertical-rl;
+
+  pointer-events: none;
+}
+
+.marineFrameSideLeft {
+  left: 7px;
+
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.marineFrameSideRight {
+  right: 7px;
+
+  transform: translateY(-50%);
+}
+
 .fishermansTaleImageWrap {
   width: 100%;
   aspect-ratio: 4 / 5;
+
   position: relative;
   overflow: hidden;
-  background: linear-gradient(145deg, rgba(21, 153, 197, 0.45), rgba(2, 23, 34, 0.8));
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+
+  border: 1px solid rgba(208, 241, 246, 0.28);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(21, 153, 197, 0.45),
+      rgba(2, 23, 34, 0.8)
+    );
+}
+
+.fishermansTaleImageWrap::before {
+  content: "";
+
+  position: absolute;
+  inset: 8px;
+  z-index: 2;
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+
+  pointer-events: none;
+}
+
+.fishermansTaleImageWrap::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 55%,
+      rgba(2, 23, 34, 0.42)
+    );
+
+  pointer-events: none;
 }
 
 .fishermansTaleImage {
   width: 100%;
   height: 100%;
-  display: block;
-  object-fit: cover;
-  transform: scale(1.02);
-}
 
-.fishermansTaleImageWrap::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(2, 23, 34, 0.42));
-  pointer-events: none;
+  display: block;
+
+  object-fit: cover;
+
+  transform: scale(1.02);
 }
 
 .fishermansTaleImageIndex {
   position: absolute;
   left: 16px;
   bottom: 15px;
-  z-index: 2;
-  color: rgba(255, 255, 255, 0.78);
+  z-index: 3;
+
+  color: rgba(255, 255, 255, 0.8);
+
   font-size: 7px;
   font-weight: 900;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+
+.marineFrameTicks {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(131, 215, 227, 0.45) 0 1px,
+      transparent 1px 34px
+    ) top left / 100% 5px no-repeat,
+    repeating-linear-gradient(
+      90deg,
+      rgba(131, 215, 227, 0.45) 0 1px,
+      transparent 1px 34px
+    ) bottom left / 100% 5px no-repeat,
+    repeating-linear-gradient(
+      0deg,
+      rgba(131, 215, 227, 0.38) 0 1px,
+      transparent 1px 34px
+    ) top left / 5px 100% no-repeat,
+    repeating-linear-gradient(
+      0deg,
+      rgba(131, 215, 227, 0.38) 0 1px,
+      transparent 1px 34px
+    ) top right / 5px 100% no-repeat;
+
+  pointer-events: none;
 }
 
 .fishermansTaleCopy {
@@ -1888,6 +2049,24 @@
 
   .voyageScene:nth-of-type(even) .fishermansTale {
     margin-left: -3vw;
+  }
+
+  .marinePortraitFrame {
+    padding: 27px 22px 26px;
+  }
+
+  .marineFrameTop,
+  .marineFrameBottom {
+    left: 22px;
+    right: 22px;
+
+    font-size: 5.8px;
+    letter-spacing: 0.1em;
+  }
+
+  .marineFrameSideLeft,
+  .marineFrameSideRight {
+    font-size: 5.5px;
   }
 
   .fishermansTaleCopy {
