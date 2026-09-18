@@ -59,31 +59,33 @@ export default function CatchVoyageExperience({
           className={styles.voyageScene}
           key={`${chapter.label}-${chapter.background.src}`}
         >
-          {chapter.background.type === "video" ? (
-            <video
-              className={styles.voyageSceneVideo}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              poster={chapter.background.poster}
-              aria-hidden="true"
-              tabIndex={-1}
-            >
-              <source src={chapter.background.src} type="video/mp4" />
-            </video>
-          ) : (
-            <img
-              className={styles.voyageSceneVideo}
-              src={chapter.background.src}
-              alt={chapter.background.alt}
-              loading={index < 2 ? "eager" : "lazy"}
-              decoding="async"
-            />
-          )}
+          <div className={styles.voyageSceneMedia}>
+            {chapter.background.type === "video" ? (
+              <video
+                className={styles.voyageSceneVideo}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                poster={chapter.background.poster}
+                aria-hidden="true"
+                tabIndex={-1}
+              >
+                <source src={chapter.background.src} type="video/mp4" />
+              </video>
+            ) : (
+              <img
+                className={styles.voyageSceneVideo}
+                src={chapter.background.src}
+                alt={chapter.background.alt}
+                loading={index < 2 ? "eager" : "lazy"}
+                decoding="async"
+              />
+            )}
 
-          <div className={styles.voyageSceneShade} aria-hidden="true" />
+            <div className={styles.voyageSceneShade} aria-hidden="true" />
+          </div>
 
           <div className={styles.voyageSceneInner}>
             <div className={styles.voyageWaypoint} aria-hidden="true">

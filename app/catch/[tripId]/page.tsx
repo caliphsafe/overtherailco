@@ -188,6 +188,29 @@ export default async function CatchTripPage({
         </div>
 
         <div className={styles.tripHeroGrid}>
+          <div className={styles.heroBrandStage}>
+            <span className={styles.heroBrandCoordinate}>
+              41.6362° N · 70.9342° W
+            </span>
+
+            <CatchCollabMark />
+
+            <div className={styles.heroBrandCaption}>
+              <span>Fleet Fisheries × Over The Rail Co.</span>
+              <span>New Bedford · Massachusetts</span>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.heroFactLine}>
+          <span>{trip.vessel.name}</span>
+          <i />
+          <span>Captain {trip.vessel.captain}</span>
+          <i />
+          <span>{trip.trip.duration} at sea</span>
+          <i />
+          <span>{trip.trip.harvestArea}</span>
+
           <div className={styles.tripHeroCopy}>
 <p className={styles.oceanKicker}>
               {trip.product.name} · {trip.vessel.homePort}
@@ -217,29 +240,6 @@ export default async function CatchTripPage({
               />
             </div>
           </div>
-
-          <div className={styles.heroBrandStage}>
-            <span className={styles.heroBrandCoordinate}>
-              41.6362° N · 70.9342° W
-            </span>
-
-            <CatchCollabMark />
-
-            <div className={styles.heroBrandCaption}>
-              <span>Fleet Fisheries × Over The Rail Co.</span>
-              <span>New Bedford · Massachusetts</span>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.heroFactLine}>
-          <span>{trip.vessel.name}</span>
-          <i />
-          <span>Captain {trip.vessel.captain}</span>
-          <i />
-          <span>{trip.trip.duration} at sea</span>
-          <i />
-          <span>{trip.trip.harvestArea}</span>
         </div>
       </section>
 

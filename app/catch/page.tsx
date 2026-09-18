@@ -52,6 +52,19 @@ export default async function CatchLandingPage({
         </div>
 
         <div className={styles.lookupHeroGrid}>
+          <div className={styles.heroBrandStage}>
+            <span className={styles.heroBrandCoordinate}>
+              41.6362° N · 70.9342° W
+            </span>
+
+            <CatchCollabMark />
+
+            <div className={styles.heroBrandCaption}>
+              <span>Fleet Fisheries × Over The Rail Co.</span>
+              <span>New Bedford · Massachusetts</span>
+            </div>
+          </div>
+
           <div className={styles.lookupContent}>
             <p className={styles.oceanKicker}>YOUR CATCH HAS A JOURNEY</p>
 
@@ -92,19 +105,6 @@ export default async function CatchLandingPage({
               Explore the F/V Viking Power voyage
               <b aria-hidden="true">→</b>
             </Link>
-          </div>
-
-          <div className={styles.heroBrandStage}>
-            <span className={styles.heroBrandCoordinate}>
-              41.6362° N · 70.9342° W
-            </span>
-
-            <CatchCollabMark />
-
-            <div className={styles.heroBrandCaption}>
-              <span>Fleet Fisheries × Over The Rail Co.</span>
-              <span>New Bedford · Massachusetts</span>
-            </div>
           </div>
         </div>
       </section>
