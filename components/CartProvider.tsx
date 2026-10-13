@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { Cart } from "@/lib/shopify";
+import { trackMetaEvent } from "@/components/MetaPixel";
 
 type CartContextValue = {
   cart: Cart | null;
@@ -57,6 +58,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         ? await cartRequest({ action: "add", cartId: cart.id, variantId, quantity })
         : await cartRequest({ action: "create", variantId, quantity });
       rememberCart(nextCart);
+      const newLine = nextCart.lines.find((line) => line.merchandise.id === variantId);
+      if (newLine) trackMetaEvent("AddToCart", {
+        content_ids: [newLine.merchandise.product.handle],
+        content_type: "product",
+        content_name: newLine.merchandise.product.title,
+        value: Number(newLine.merchandise.price.amount) * quantity,
+        currency: newLine.merchandise.price.currencyCode,
+        num_items: quantity,
+      });
       setIsOpen(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to add this item.");
