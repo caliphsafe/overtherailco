@@ -58,13 +58,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         ? await cartRequest({ action: "add", cartId: cart.id, variantId, quantity })
         : await cartRequest({ action: "create", variantId, quantity });
       rememberCart(nextCart);
+      // A successful Shopify cart API response confirms the add operation.
+      // Don't suppress the Meta event when Shopify's returned line ID differs
+      // in representation from the selected Storefront API variant ID.
       const newLine = nextCart.lines.find((line) => line.merchandise.id === variantId);
-      if (newLine) trackMetaEvent("AddToCart", {
-        content_ids: [newLine.merchandise.product.handle],
+      const unitPrice = newLine ? Number(newLine.merchandise.price.amount) : undefined;
+      trackMetaEvent("AddToCart", {
+        content_ids: [variantId],
         content_type: "product",
-        content_name: newLine.merchandise.product.title,
-        value: Number(newLine.merchandise.price.amount) * quantity,
-        currency: newLine.merchandise.price.currencyCode,
+        ...(newLine ? { content_name: newLine.merchandise.product.title } : {}),
+        ...(unitPrice !== undefined && Number.isFinite(unitPrice)
+          ? { value: unitPrice * quantity, currency: newLine!.merchandise.price.currencyCode }
+          : {}),
         num_items: quantity,
       });
       setIsOpen(true);
