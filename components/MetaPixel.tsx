@@ -6,7 +6,13 @@ import { usePathname } from "next/navigation";
 // Public dataset identifier; Shopify remains responsible for Purchase events.
 export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "4192361147704940";
 
-type FBQ = (...args: unknown[]) => void;
+type FBQ = ((...args: unknown[]) => void) & {
+  callMethod?: (...args: unknown[]) => void;
+  queue?: unknown[][];
+  loaded?: boolean;
+  version?: string;
+  push?: (...args: unknown[]) => void;
+};
 declare global { interface Window { fbq?: FBQ; _fbq?: FBQ } }
 
 export function trackMetaEvent(event: "ViewContent" | "AddToCart" | "InitiateCheckout", params?: Record<string, unknown>) {
@@ -23,7 +29,15 @@ export default function MetaPixel() {
     if ((navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl) return;
     if (!window.fbq) {
       const queue: unknown[][] = [];
-      const fbq: FBQ = (...args) => { queue.push(args); };
+      // Meta attaches callMethod after fbevents.js loads. Without this
+      // forwarding branch, all subsequent commerce events stay queued forever.
+      const fbq = ((...args: unknown[]) => {
+        if (fbq.callMethod) {
+          fbq.callMethod(...args);
+        } else {
+          queue.push(args);
+        }
+      }) as FBQ;
       Object.assign(fbq, { queue, loaded: true, version: "2.0", push: fbq });
       window.fbq = fbq;
       window._fbq = fbq;
