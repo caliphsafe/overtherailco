@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { trackMetaEvent } from "@/components/MetaPixel";
 import type { Product } from "@/lib/shopify";
 import { formatMoney } from "@/lib/shopify";
 import { useCart } from "@/components/CartProvider";
@@ -12,6 +13,16 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const [selections, setSelections] = useState<Record<string, string>>(initialSelections);
   const [activeImage, setActiveImage] = useState(defaultVariant?.image?.url || product.images[0]?.url || "");
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    trackMetaEvent("ViewContent", {
+      content_ids: [product.id],
+      content_type: "product",
+      content_name: product.title,
+      value: Number(product.priceRange.minVariantPrice.amount),
+      currency: product.priceRange.minVariantPrice.currencyCode,
+    });
+  }, [product.id, product.title, product.priceRange.minVariantPrice.amount, product.priceRange.minVariantPrice.currencyCode]);
 
   const selectedVariant = useMemo(() => product.variants.find((variant) =>
     variant.selectedOptions.every((option) => selections[option.name] === option.value)
