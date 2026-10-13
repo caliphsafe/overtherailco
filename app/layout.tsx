@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import { CartProvider } from "@/components/CartProvider";
+import MetaPixel from "@/components/MetaPixel";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body>
         <CartProvider>
+          <MetaPixel />
           <Header />
           <main>{children}</main>
           <Footer />
