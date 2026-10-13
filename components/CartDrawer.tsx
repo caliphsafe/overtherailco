@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { formatMoney } from "@/lib/shopify";
 import { useCart } from "@/components/CartProvider";
+import { trackMetaEvent } from "@/components/MetaPixel";
 
 export default function CartDrawer() {
   const { cart, isOpen, isLoading, error, closeCart, updateLine, removeLine } = useCart();
@@ -80,7 +81,11 @@ export default function CartDrawer() {
               <strong>{formatMoney(cart.cost.subtotalAmount)}</strong>
             </div>
             <p>Taxes and shipping calculated at Shopify checkout.</p>
-            <a className="button button-orange checkout-button" href={cart.checkoutUrl}>
+            <a className="button button-orange checkout-button" href={cart.checkoutUrl} onClick={() => trackMetaEvent("InitiateCheckout", {
+                value: Number(cart.cost.totalAmount.amount),
+                currency: cart.cost.totalAmount.currencyCode,
+                num_items: cart.totalQuantity,
+              })}>
               {isLoading ? "Updating..." : "Continue to checkout"}
             </a>
           </div>
