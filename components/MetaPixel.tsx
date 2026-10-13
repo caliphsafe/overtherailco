@@ -20,7 +20,7 @@ export default function MetaPixel() {
     if (!META_PIXEL_ID || !pathname) return;
     // Honor a browser-level opt-out. Storefront privacy/consent management must
     // additionally govern whether advertising cookies/scripts may run.
-    if (navigator.globalPrivacyControl) return;
+    if ((navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl) return;
     if (!window.fbq) {
       const queue: unknown[][] = [];
       const fbq: FBQ = (...args) => { queue.push(args); };
